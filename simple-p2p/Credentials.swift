@@ -7,11 +7,6 @@
 
 import Foundation
 
-// NOTE: This is a convenience class for loading the client Identity and
-// Certificate Authority for authenticating peers and securing communication.
-// To simplify the demo this pulls the identity and CA certificate from files
-// embedded in the app. In a realworld use-case the identity would more than
-// likely come from the keychain instead of embedding it in the app.
 class Credentials {
     static func async(_ async: @escaping (SecIdentity, SecCertificate) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
@@ -19,8 +14,11 @@ class Credentials {
         }
     }
     
+    // NOTE: To simplify the demo this pulls the security identity from a file
+    // embedded in the app. In a realworld use-case the identity would more than
+    // likely be managed using Keychain Services.
     private static let identity: SecIdentity = {
-        let url = Bundle.main.url(forResource: "client_key", withExtension: "p12")!
+        let url = Bundle.main.url(forResource: "client_identity", withExtension: "p12")!
         let data = try! Data(contentsOf: url)
         
         var result: CFArray?

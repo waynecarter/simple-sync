@@ -14,7 +14,7 @@
 		B00D637629FD74FF00825DDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B00D637529FD74FF00825DDB /* Assets.xcassets */; };
 		B00D637929FD74FF00825DDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B00D637729FD74FF00825DDB /* LaunchScreen.storyboard */; };
 		B00D63A429FDEB0800825DDB /* ca_cert.der in Resources */ = {isa = PBXBuildFile; fileRef = B00D63A029FDEB0800825DDB /* ca_cert.der */; };
-		B00D63A929FDF7F600825DDB /* client_key.p12 in Resources */ = {isa = PBXBuildFile; fileRef = B00D63A729FDF78200825DDB /* client_key.p12 */; };
+		B00D63A929FDF7F600825DDB /* client_identity.p12 in Resources */ = {isa = PBXBuildFile; fileRef = B00D63A729FDF78200825DDB /* client_identity.p12 */; };
 		B09F7A3A2A00A45400022B9E /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09F7A392A00A45400022B9E /* Credentials.swift */; };
 		B0DB1AE32A00D5450036F651 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB1AE22A00D5450036F651 /* Colors.swift */; };
 		B0DB1AEC2A01A8890036F651 /* CouchbaseLiteSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DB1AEB2A01A8880036F651 /* CouchbaseLiteSwift.xcframework */; };
@@ -46,7 +46,7 @@
 		B00D637829FD74FF00825DDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B00D637A29FD74FF00825DDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B00D63A029FDEB0800825DDB /* ca_cert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ca_cert.der; sourceTree = "<group>"; };
-		B00D63A729FDF78200825DDB /* client_key.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client_key.p12; sourceTree = "<group>"; };
+		B00D63A729FDF78200825DDB /* client_identity.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client_identity.p12; sourceTree = "<group>"; };
 		B09F7A392A00A45400022B9E /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		B0DB1AE22A00D5450036F651 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		B0DB1AEB2A01A8880036F651 /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "simple-p2p/Frameworks/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				B00D63A029FDEB0800825DDB /* ca_cert.der */,
-				B00D63A729FDF78200825DDB /* client_key.p12 */,
+				B00D63A729FDF78200825DDB /* client_identity.p12 */,
 			);
 			path = credentials;
 			sourceTree = "<group>";
@@ -179,7 +179,7 @@
 				B00D637929FD74FF00825DDB /* LaunchScreen.storyboard in Resources */,
 				B00D637629FD74FF00825DDB /* Assets.xcassets in Resources */,
 				B00D63A429FDEB0800825DDB /* ca_cert.der in Resources */,
-				B00D63A929FDF7F600825DDB /* client_key.p12 in Resources */,
+				B00D63A929FDF7F600825DDB /* client_identity.p12 in Resources */,
 				B00D637429FD74FC00825DDB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

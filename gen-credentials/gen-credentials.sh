@@ -16,7 +16,7 @@ openssl req -x509 -new -nodes -key ca_key.pem -sha256 -days 3650 -out ca_cert.pe
 openssl x509 -in ca_cert.pem -outform der -out ca_cert.der
 
 # Create P12 for the CA
-openssl pkcs12 -export -nodes -out ca_key.p12 -inkey ca_key.pem \
+openssl pkcs12 -export -nodes -out ca_identity.p12 -inkey ca_key.pem \
     -in ca_cert.pem -passout pass:
 
 # Generate a private key for the client
@@ -34,7 +34,7 @@ openssl x509 -req -in client.csr -CA ca_cert.pem -CAkey ca_key.pem -CAcreateseri
 openssl x509 -in client_cert.pem -outform der -out client_cert.der
 
 # Create P12 for the client
-openssl pkcs12 -export -nodes -out client_key.p12 -inkey client_key.pem \
+openssl pkcs12 -export -nodes -out client_identity.p12 -inkey client_key.pem \
     -in client_cert.pem -passout pass:
   
 # Clean up the PEM and CSR files
