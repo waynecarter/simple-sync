@@ -23,8 +23,8 @@ class Credentials {
         
         var result: CFArray?
         let options: [String: Any] = [kSecImportExportPassphrase as String: ""]
-        // NOTE: This method is not supposed to be called on the main
-        // thread. That is why the get function is async.
+        // NOTE: This method cannot be called on the main thread. That is why
+        // the get function is async.
         let status = SecPKCS12Import(data as CFData, options as NSDictionary, &result)
         let items = result as! [[String: Any]]
         let item = items.first!
