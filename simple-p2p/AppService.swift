@@ -122,7 +122,7 @@ final class AppService {
                 // Set an X509 policy so that the hostname of the peer presenting
                 // the certificate doesn't need to match the certificate CN.
                 let policy = SecPolicyCreateBasicX509()
-                SecTrustCreateWithCertificates(caCertificate, policy, &secTrust)
+                SecTrustSetPolicies(secTrust, policy)
                 
                 // Set the trust anchor to the trusted root CA certificate.
                 SecTrustSetAnchorCertificates(secTrust, [caCertificate] as CFArray)
