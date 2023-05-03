@@ -10,4 +10,4 @@ This enables real-time collaboration and data sharing between nearby devices wit
 3. Run the app on two or more simulators, phones, or tablets.
 4. Tap the screen and the color will change and sync with the other devices.
 
-**NOTE:** The included `gen-credentials.sh` script was used to generate the credentials included in the project and can be used as-is for demo purposes. If you want to generate new credentials, run that script again and replace the files in the the project's `credentials` folder with the newly generated files.
+**NOTE:** The included `gen-credentials.sh` script was used to generate the credentials included in the project and the included credentials can be used as-is for demo purposes. If you want to generate new credentials, run that script again and replace the files in the the project's `credentials` folder with the newly generated files.
