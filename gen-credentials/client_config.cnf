@@ -1,0 +1,14 @@
+[req]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+
+[req_distinguished_name]
+C = US
+ST = Florida
+L = Miami
+O = The Store
+CN = *.thestore.com
+
+[v3_req]
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
+extendedKeyUsage = clientAuth, serverAuth
