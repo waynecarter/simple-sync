@@ -370,12 +370,8 @@ final class AppService {
     }
     
     // MARK: Cleanup
-
+    
     private func cleanupConnection(_ connection: NWConnection) {
-        // Cancel and remove the connection.
-        connection.cancel()
-        connections.removeAll { $0 === connection }
-
         // For passive peers, remove and stop the endpoint listener.
         if let messageEndpointListener = messageEndpointListeners.removeValue(forKey: HashableObject(connection)) {
             messageEndpointListener.closeAll()
@@ -385,6 +381,10 @@ final class AppService {
         if let replicator = replicators.removeValue(forKey: HashableObject(connection)) {
             replicator.stop()
         }
+        
+        // Cancel and remove the connection.
+        connection.cancel()
+        connections.removeAll { $0 === connection }
     }
     
     // MARK: - Utility
