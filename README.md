@@ -6,7 +6,7 @@ This enables real-time collaboration and data sharing between nearby devices wit
 
 ## Setup
 1. Clone the repo
-2. Download the latest [CouchbaseLiteSwift.xcframework](https://www.couchbase.com/downloads/?family=couchbase-lite) and copy it to the project's Frameworks directory.
+2. Download the latest [CouchbaseLiteSwift.xcframework](https://www.couchbase.com/downloads/?family=couchbase-lite) and copy it to the project's `Frameworks` directory.
 3. Run the app on two or more simulators, phones, or tablets.
 4. Tap the screen and the color will change and sync with the other devices.
 
