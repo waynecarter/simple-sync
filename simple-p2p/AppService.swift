@@ -117,7 +117,7 @@ final class AppService {
         return { sec_protocol_metadata, sec_trust, sec_protocol_verify_complete in
             self.trustEvaluationQueue.async {
                 // Create a SecTrust object with the provided sec_trust
-                var secTrust: SecTrust! = sec_trust_copy_ref(sec_trust).takeRetainedValue()
+                let secTrust: SecTrust! = sec_trust_copy_ref(sec_trust).takeRetainedValue()
                 
                 // Set an X509 policy so that the hostname of the peer presenting
                 // the certificate doesn't need to match the certificate CN.
