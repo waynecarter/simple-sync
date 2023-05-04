@@ -37,8 +37,12 @@ final class AppService {
         // Monitor the network and pause/resume when connectivity changes.
         networkMonitor.pathUpdateHandler = { [weak self] path in
             switch path.status {
-            case .satisfied: self?.resume()
-            default: self?.pause()
+            case .satisfied:
+                Log.info("Network is available")
+                self?.resume()
+            default:
+                Log.info("Network is unavailable")
+                self?.pause()
             }
         }
         networkMonitor.start(queue: networkQueue)
@@ -163,7 +167,7 @@ final class AppService {
                 using: networkParameters
             )
         } catch {
-            print("Failed to create listener: \(error)")
+            Log.info("Failed to create listener: \(error)")
             return nil
         }
 
@@ -176,11 +180,11 @@ final class AppService {
         listener.stateUpdateHandler = { newState in
             switch newState {
             case .ready:
-                print("Listener is ready")
+                Log.info("Listener is ready")
             case .failed(let error):
-                print("Listener stopped with error: \(error)")
+                Log.info("Listener stopped with error: \(error)")
             case .cancelled:
-                print("Listener stopped with state: cancelled")
+                Log.info("Listener stopped with state: cancelled")
             default:
                 break
             }
@@ -204,10 +208,10 @@ final class AppService {
                         break
                     }
                     
-                    print("Added service: \(result.endpoint)")
+                    Log.info("Added service: \(result.endpoint)")
                     self?.handleNewEndpoint(result.endpoint)
                 case .removed(let result):
-                    print("Lost service: \(result.endpoint)")
+                    Log.info("Lost service: \(result.endpoint)")
                     if let connection = self?.connections.first(where: { $0.endpoint == result.endpoint }) {
                         self?.cleanupConnection(connection)
                     }
@@ -221,11 +225,11 @@ final class AppService {
         browser.stateUpdateHandler = { newState in
             switch newState {
             case .ready:
-                print("Browser is ready")
+                Log.info("Browser is ready")
             case .failed(let error):
-                print("Browser stopped with error: \(error)")
+                Log.info("Browser stopped with error: \(error)")
             case .cancelled:
-                print("Browser stopped with state: cancelled")
+                Log.info("Browser stopped with state: cancelled")
             default:
                 break
             }
@@ -238,14 +242,14 @@ final class AppService {
         connection.stateUpdateHandler = { [weak self] newState in
             switch newState {
             case .ready:
-                print("Connection ready: \(connection)")
+                Log.info("Connection ready: \(connection)")
                 self?.connections.append(connection)
                 self?.setupMessageEndpointListener(for: connection)
             case .failed:
-                print("Connection failed: \(connection)")
+                Log.info("Connection failed: \(connection)")
                 self?.cleanupConnection(connection)
             case .cancelled:
-                print("Connection cancelled: \(connection)")
+                Log.info("Connection cancelled: \(connection)")
                 self?.cleanupConnection(connection)
             default:
                 break
@@ -263,14 +267,14 @@ final class AppService {
         connection.stateUpdateHandler = { [weak self] newState in
             switch newState {
             case .ready:
-                print("Connection ready: \(connection)")
+                Log.info("Connection ready: \(connection)")
                 self?.connections.append(connection)
                 self?.setupReplicator(for: connection)
             case .failed:
-                print("Connection failed: \(connection)")
+                Log.info("Connection failed: \(connection)")
                 self?.cleanupConnection(connection)
             case .cancelled:
-                print("Connection cancelled: \(connection)")
+                Log.info("Connection cancelled: \(connection)")
                 self?.cleanupConnection(connection)
             default:
                 break
@@ -335,14 +339,21 @@ final class AppService {
         
         func close(error: Error?, completion: @escaping () -> Void) {
             replicatorConnection = nil
+            connection.cancel()
             completion()
-            // TODO: Stop recieving()
         }
         
         func send(message: CouchbaseLiteSwift.Message, completion: @escaping (Bool, CouchbaseLiteSwift.MessagingError?) -> Void) {
             let data = message.toData()
-            print("Sending data: \(data)")
-            connection.send(content: data, contentContext: .defaultMessage, isComplete: true, completion: .idempotent)
+            Log.info("Sending data: \(data)")
+            connection.send(content: data, contentContext: .defaultMessage, isComplete: true, completion: .contentProcessed({ error in
+                if let error = error {
+                    Log.info("Send error: \(error)")
+                    completion(true, CouchbaseLiteSwift.MessagingError(error: error, isRecoverable: false))
+                } else {
+                    completion(true, nil)
+                }
+            }))
         }
         
         private func receive() {
@@ -350,21 +361,22 @@ final class AppService {
             let maximumLength = 65536
             connection.receive(minimumIncompleteLength: minimumIncompleteLength, maximumLength: maximumLength) { [weak self] (data, _, _, error) in
                 if let error = error {
-                    print("Receive error: \(error)")
-                    self?.connection.cancel()
-                    return
-                }
-
-                if let data = data {
-                    print("Received data: \(data)")
-                    let message = Message.fromData(data)
-                    self?.replicatorConnection?.receive(message: message)
+                    Log.info("Receive error: \(error)")
+                    self?.replicatorConnection?.close(
+                        error: MessagingError(error: error, isRecoverable: false)
+                    )
                 } else {
-                    print("Received nil data")
-                }
+                    if let data = data {
+                        Log.info("Received data: \(data)")
+                        let message = Message.fromData(data)
+                        self?.replicatorConnection?.receive(message: message)
+                    } else {
+                        Log.info("Received data: nil")
+                    }
 
-                // Continue listening for messages.
-                self?.receive()
+                    // Continue listening for messages.
+                    self?.receive()
+                }
             }
         }
     }
@@ -388,6 +400,12 @@ final class AppService {
     }
     
     // MARK: - Utility
+    
+    class Log {
+        static func info(_ message: String) {
+            print(message)
+        }
+    }
     
     private class HashableObject: Hashable {
         let object: AnyObject
