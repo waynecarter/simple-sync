@@ -6,9 +6,14 @@ req_extensions = v3_req
 C = US
 ST = Florida
 L = Miami
-O = The Store
-CN = *.thestore.com
+O = The Company
+CN = 9f7b52bb-3b3c-4d26-9b91-e1863c446676
 
 [v3_req]
 keyUsage = nonRepudiation, digitalSignature, keyEncipherment, keyAgreement
-extendedKeyUsage = clientAuth, serverAuth
+extendedKeyUsage = clientAuth
+basicConstraints = CA:FALSE
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = 9f7b52bb-3b3c-4d26-9b91-e1863c446676.thecompany.com
