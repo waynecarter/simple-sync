@@ -31,24 +31,16 @@ class ViewController: UIViewController {
             storeService.start()
         }
         
-        applyProfileColor()
-        func applyProfileColor() {
-            // Read the color from the profile and set the background color.
-            if let profile = try? collection.document(id: "profile"),
-               let color = Colors.colorFromHex(profile.string(forKey: "color"))
-            {
-                view.backgroundColor = color
-            }
-        }
-        
         // Listen for changes to the profile document.
-        _ = collection.addDocumentChangeListener(id: "profile") { _ in
-            applyProfileColor()
+        _ = collection.addDocumentChangeListener(id: "profile") { [weak self] _ in
+            self?.applyProfileColor()
         }
         
         // Listen for taps on the screen.
        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
        view.addGestureRecognizer(tapRecognizer)
+        
+        applyProfileColor()
     }
     
     @objc func viewTapped() {
@@ -58,6 +50,15 @@ class ViewController: UIViewController {
         profile.setString(Colors.hexFromColor(color), forKey: "color")
         
         try? collection.save(document: profile)
+    }
+    
+    private func applyProfileColor() {
+        // Read the color from the profile and set the background color.
+        if let profile = try? collection.document(id: "profile"),
+           let color = Colors.colorFromHex(profile.string(forKey: "color"))
+        {
+            view.backgroundColor = color
+        }
     }
 }
 
