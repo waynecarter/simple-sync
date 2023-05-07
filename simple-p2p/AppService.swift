@@ -5,6 +5,7 @@
 //  Created by Wayne Carter on 4/29/23.
 //
 
+import os
 import Foundation
 import Network
 import UIKit
@@ -39,6 +40,7 @@ final class AppService {
             switch path.status {
             case .satisfied:
                 Log.info("Network is available")
+                self?.pause()
                 self?.resume()
             default:
                 Log.info("Network is unavailable")
@@ -173,6 +175,15 @@ final class AppService {
 
         // Handle new connections.
         listener.newConnectionHandler = { [weak self] connection in
+            // Don't connect to an endpoint more than once.
+            if let serviceName = self?.serviceNameFor(connection.endpoint),
+               self?.connections.contains(where: { self?.serviceNameFor($0.endpoint) == serviceName }) ?? false
+            {
+                Log.info("Skipping connection: \(serviceName)")
+                self?.cleanupConnection(connection)
+                return
+            }
+            
             self?.handleNewConnection(connection)
         }
         
@@ -203,8 +214,18 @@ final class AppService {
             for change in changes {
                 switch change {
                 case .added(let result):
+                    let serviceName = self?.serviceNameFor(result.endpoint)
+                    
                     // Don't connect to the local service.
-                    guard case let .service(name: serviceName, type: _, domain: _, interface: _) = result.endpoint, serviceName != self?.uuid else {
+                    if serviceName == self?.uuid {
+                        break
+                    }
+                    
+                    // Don't connect to an endpoint more than once.
+                    if let serviceName = serviceName,
+                       self?.connections.contains(where: { self?.serviceNameFor($0.endpoint) == serviceName }) ?? false
+                    {
+                        Log.info("Skipping service: \(serviceName)")
                         break
                     }
                     
@@ -401,9 +422,24 @@ final class AppService {
     
     // MARK: - Utility
     
+    private func serviceNameFor(_ endpoint: NWEndpoint) -> String? {
+        switch endpoint {
+        case .service(let serviceName, _, _, _): return serviceName
+        default: return nil
+        }
+    }
+    
     class Log {
+        static private let logger = OSLog(subsystem: "simple-p2p", category: "network")
+        
         static func info(_ message: String) {
-            print(message)
+            let isDebuggerAttached = isatty(STDERR_FILENO) != 0
+            
+            if isDebuggerAttached {
+                print(message)
+            } else {
+                os_log("%{public}@", log: logger, type: .info, message)
+            }
         }
     }
     
