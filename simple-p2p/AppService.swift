@@ -125,8 +125,9 @@ final class AppService {
                 // Create a SecTrust object with the provided sec_trust
                 let secTrust: SecTrust! = sec_trust_copy_ref(sec_trust).takeRetainedValue()
                 
-                // Set an X509 policy so that the hostname of the peer presenting
-                // the certificate doesn't need to match the certificate CN.
+                // Create and set the security policy to SSL with a nil hostname. The peer will
+                // go through SSL validation but it's hostname will not need to match the peer's
+                // certificate CN.
                 let policy = SecPolicyCreateSSL(false, nil)
                 SecTrustSetPolicies(secTrust, policy)
                 
