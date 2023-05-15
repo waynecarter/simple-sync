@@ -17,14 +17,8 @@ openssl req -x509 -new -nodes -key ca_key.pem -sha256 -days 3650 -out ca_cert.pe
   -subj "/C=${COUNTRY}/ST=${STATE}/L=${CITY}/O=${COMPANY_NAME}/CN=${DOMAIN} Root CA"
 openssl x509 -in ca_cert.pem -outform der -out ca_cert.der
 
-# Create P12 for the CA
-openssl pkcs12 -export -nodes -out ca_identity.p12 -inkey ca_key.pem \
-    -in ca_cert.pem -passout pass:
-
-# Generate a private key for the client if it doesn't already exist
-if [ ! -f client_key.pem ]; then
-    openssl genrsa -out client_key.pem 4096
-fi
+# Generate a private key for the client
+openssl genrsa -out client_key.pem 4096
 
 # Create a certificate signing request (CSR) for the client
 openssl req -new -key client_key.pem -out client.csr \
@@ -43,5 +37,7 @@ openssl pkcs12 -export -nodes -out client_identity.p12 -inkey client_key.pem \
   
 # Clean up the cert PEM and CSR files
 rm ca_cert.pem
+rm client_key.pem
 rm client_cert.pem
+rm client_cert.der
 rm client.csr
