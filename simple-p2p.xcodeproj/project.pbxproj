@@ -350,7 +350,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "simple-p2p/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Simple P2P";
+				INFOPLIST_KEY_CFBundleDisplayName = "Color Sync";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to other apps nearby.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -384,7 +384,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "simple-p2p/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Simple P2P";
+				INFOPLIST_KEY_CFBundleDisplayName = "Color Sync";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to other apps nearby.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
