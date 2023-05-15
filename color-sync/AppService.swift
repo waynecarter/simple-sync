@@ -1,6 +1,6 @@
 //
 //  AppService.swift
-//  simple-p2p
+//  color-sync
 //
 //  Created by Wayne Carter on 4/29/23.
 //
@@ -431,7 +431,7 @@ final class AppService {
     }
     
     class Log {
-        static private let logger = OSLog(subsystem: "simple-p2p", category: "network")
+        static private let logger = OSLog(subsystem: "color-sync", category: "network")
         
         static func info(_ message: String) {
             let isDebuggerAttached = isatty(STDERR_FILENO) != 0

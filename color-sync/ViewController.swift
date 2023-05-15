@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  simple-p2p
+//  color-sync
 //
 //  Created by Wayne Carter on 4/29/23.
 //

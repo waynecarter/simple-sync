@@ -15,21 +15,21 @@
 		B00D637929FD74FF00825DDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B00D637729FD74FF00825DDB /* LaunchScreen.storyboard */; };
 		B00D63A429FDEB0800825DDB /* ca_cert.der in Resources */ = {isa = PBXBuildFile; fileRef = B00D63A029FDEB0800825DDB /* ca_cert.der */; };
 		B00D63A929FDF7F600825DDB /* client_identity.p12 in Resources */ = {isa = PBXBuildFile; fileRef = B00D63A729FDF78200825DDB /* client_identity.p12 */; };
+		B08241A52A12AA9900FE960A /* CouchbaseLiteSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */; };
+		B08241A62A12AA9900FE960A /* CouchbaseLiteSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B09F7A3A2A00A45400022B9E /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09F7A392A00A45400022B9E /* Credentials.swift */; };
 		B0DB1AE32A00D5450036F651 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB1AE22A00D5450036F651 /* Colors.swift */; };
-		B0DB1AEC2A01A8890036F651 /* CouchbaseLiteSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DB1AEB2A01A8880036F651 /* CouchbaseLiteSwift.xcframework */; };
-		B0DB1AED2A01A8890036F651 /* CouchbaseLiteSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0DB1AEB2A01A8880036F651 /* CouchbaseLiteSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0F1C88B29FF89450022FC25 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F1C88A29FF89450022FC25 /* AppService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B0DB1AEE2A01A8890036F651 /* Embed Frameworks */ = {
+		B08241A72A12AA9900FE960A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B0DB1AED2A01A8890036F651 /* CouchbaseLiteSwift.xcframework in Embed Frameworks */,
+				B08241A62A12AA9900FE960A /* CouchbaseLiteSwift.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -37,7 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B00D636929FD74FC00825DDB /* simple-p2p.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "simple-p2p.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00D636929FD74FC00825DDB /* color-sync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "color-sync.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B00D636C29FD74FC00825DDB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B00D636E29FD74FC00825DDB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B00D637029FD74FC00825DDB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +47,8 @@
 		B00D637A29FD74FF00825DDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B00D63A029FDEB0800825DDB /* ca_cert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ca_cert.der; sourceTree = "<group>"; };
 		B00D63A729FDF78200825DDB /* client_identity.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client_identity.p12; sourceTree = "<group>"; };
+		B08241A02A12AA8900FE960A /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "../../../Downloads/couchbase-lite-swift_xc_enterprise_3/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
+		B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "color-sync/Frameworks/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
 		B09F7A392A00A45400022B9E /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		B0DB1AE22A00D5450036F651 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		B0DB1AEB2A01A8880036F651 /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "simple-p2p/Frameworks/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
@@ -58,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0DB1AEC2A01A8890036F651 /* CouchbaseLiteSwift.xcframework in Frameworks */,
+				B08241A52A12AA9900FE960A /* CouchbaseLiteSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +70,7 @@
 		B00D636029FD74FC00825DDB = {
 			isa = PBXGroup;
 			children = (
-				B00D636B29FD74FC00825DDB /* simple-p2p */,
+				B00D636B29FD74FC00825DDB /* color-sync */,
 				B00D636A29FD74FC00825DDB /* Products */,
 				B00D638029FD754400825DDB /* Frameworks */,
 			);
@@ -77,12 +79,12 @@
 		B00D636A29FD74FC00825DDB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B00D636929FD74FC00825DDB /* simple-p2p.app */,
+				B00D636929FD74FC00825DDB /* color-sync.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B00D636B29FD74FC00825DDB /* simple-p2p */ = {
+		B00D636B29FD74FC00825DDB /* color-sync */ = {
 			isa = PBXGroup;
 			children = (
 				B00D636C29FD74FC00825DDB /* AppDelegate.swift */,
@@ -97,12 +99,14 @@
 				B00D637729FD74FF00825DDB /* LaunchScreen.storyboard */,
 				B00D637A29FD74FF00825DDB /* Info.plist */,
 			);
-			path = "simple-p2p";
+			path = "color-sync";
 			sourceTree = "<group>";
 		};
 		B00D638029FD754400825DDB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */,
+				B08241A02A12AA8900FE960A /* CouchbaseLiteSwift.xcframework */,
 				B0DB1AEB2A01A8880036F651 /* CouchbaseLiteSwift.xcframework */,
 			);
 			name = Frameworks;
@@ -120,22 +124,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B00D636829FD74FC00825DDB /* simple-p2p */ = {
+		B00D636829FD74FC00825DDB /* color-sync */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B00D637D29FD74FF00825DDB /* Build configuration list for PBXNativeTarget "simple-p2p" */;
+			buildConfigurationList = B00D637D29FD74FF00825DDB /* Build configuration list for PBXNativeTarget "color-sync" */;
 			buildPhases = (
 				B00D636529FD74FC00825DDB /* Sources */,
 				B00D636629FD74FC00825DDB /* Frameworks */,
 				B00D636729FD74FC00825DDB /* Resources */,
-				B0DB1AEE2A01A8890036F651 /* Embed Frameworks */,
+				B08241A72A12AA9900FE960A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "simple-p2p";
+			name = "color-sync";
 			productName = "peer-to-peer-sync";
-			productReference = B00D636929FD74FC00825DDB /* simple-p2p.app */;
+			productReference = B00D636929FD74FC00825DDB /* color-sync.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -153,7 +157,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B00D636429FD74FC00825DDB /* Build configuration list for PBXProject "simple-p2p" */;
+			buildConfigurationList = B00D636429FD74FC00825DDB /* Build configuration list for PBXProject "color-sync" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -166,7 +170,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B00D636829FD74FC00825DDB /* simple-p2p */,
+				B00D636829FD74FC00825DDB /* color-sync */,
 			);
 		};
 /* End PBXProject section */
@@ -346,10 +350,10 @@
 				DEVELOPMENT_TEAM = XZ979P7C7U;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/simple-p2p/Frameworks",
+					"$(PROJECT_DIR)/color-sync/Frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "simple-p2p/Info.plist";
+				INFOPLIST_FILE = "color-sync/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Color Sync";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to other apps nearby.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -362,7 +366,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "simple-p2p";
+				PRODUCT_BUNDLE_IDENTIFIER = "color-sync";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -380,10 +384,10 @@
 				DEVELOPMENT_TEAM = XZ979P7C7U;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/simple-p2p/Frameworks",
+					"$(PROJECT_DIR)/color-sync/Frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "simple-p2p/Info.plist";
+				INFOPLIST_FILE = "color-sync/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Color Sync";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Connect to other apps nearby.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -396,7 +400,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "simple-p2p";
+				PRODUCT_BUNDLE_IDENTIFIER = "color-sync";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -407,7 +411,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B00D636429FD74FC00825DDB /* Build configuration list for PBXProject "simple-p2p" */ = {
+		B00D636429FD74FC00825DDB /* Build configuration list for PBXProject "color-sync" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B00D637B29FD74FF00825DDB /* Debug */,
@@ -416,7 +420,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B00D637D29FD74FF00825DDB /* Build configuration list for PBXNativeTarget "simple-p2p" */ = {
+		B00D637D29FD74FF00825DDB /* Build configuration list for PBXNativeTarget "color-sync" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B00D637E29FD74FF00825DDB /* Debug */,
