@@ -9,7 +9,7 @@ import UIKit
 import CouchbaseLiteSwift
 
 class ViewController: UIViewController {
-    var storeService: AppService!
+    var colorSyncService: AppService!
     var collection: Collection!
     
     override func viewDidLoad() {
@@ -21,14 +21,14 @@ class ViewController: UIViewController {
         
         // Get the identity and CA async and then start the app service.
         Credentials.async { [self] identity, ca in
-            storeService = AppService(
+            colorSyncService = AppService(
                 name: "color-sync",
                 database: database,
                 collections: [collection],
                 identity: identity,
                 ca: ca
             )
-            storeService.start()
+            colorSyncService.start()
         }
         
         // Listen for changes to the profile document.
