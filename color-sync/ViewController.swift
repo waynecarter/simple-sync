@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     var storeService: AppService!
     var collection: Collection!
 
+    @IBOutlet weak var label: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,6 +60,7 @@ class ViewController: UIViewController {
            let color = Colors.colorFromHex(profile.string(forKey: "color"))
         {
             view.backgroundColor = color
+            label.isHidden = true
         }
     }
 }
