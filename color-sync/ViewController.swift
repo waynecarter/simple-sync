@@ -16,13 +16,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Set up the database and collection.
-        let database = try! Database(name: "store")
+        let database = try! Database(name: "color-sync")
         collection = try! database.defaultCollection()
         
         // Get the identity and CA async and then start the app service.
         Credentials.async { [self] identity, ca in
             storeService = AppService(
-                name: "store",
+                name: "color-sync",
                 database: database,
                 collections: [collection],
                 identity: identity,
@@ -69,6 +69,7 @@ class ViewController: UIViewController {
     @IBAction func showInfo(_ sender: UIButton) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.popoverPresentationController?.sourceView = sender
+        alert.title = "Tap the screen  to load a color and sync with devices around you"
         alert.addAction(UIAlertAction(title: "Terms of Use", style: .default, handler: { action in
             if let url = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/") {
                 UIApplication.shared.open(url)

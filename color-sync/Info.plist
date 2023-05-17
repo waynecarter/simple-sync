@@ -4,7 +4,7 @@
 <dict>
 	<key>NSBonjourServices</key>
 	<array>
-		<string>_store._tcp</string>
+		<string>_color-sync._tcp</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
