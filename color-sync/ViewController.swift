@@ -11,8 +11,6 @@ import CouchbaseLiteSwift
 class ViewController: UIViewController {
     var storeService: AppService!
     var collection: Collection!
-
-    @IBOutlet weak var label: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +58,31 @@ class ViewController: UIViewController {
            let color = Colors.colorFromHex(profile.string(forKey: "color"))
         {
             view.backgroundColor = color
-            label.isHidden = true
+            instructionsLabel.isHidden = true
         }
+    }
+    
+    @IBOutlet weak var instructionsLabel: UILabel!
+    
+    // Info
+    
+    @IBAction func showInfo(_ sender: UIButton) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.sourceView = sender
+        alert.addAction(UIAlertAction(title: "Terms of Use", style: .default, handler: { action in
+            if let url = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/") {
+                UIApplication.shared.open(url)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Privacy Policy", style: .default, handler: { action in
+            if let url = URL(string: "https://github.com/waynecarter/color-sync/blob/main/privacy.md") {
+                UIApplication.shared.open(url)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            alert.dismiss(animated: true)
+        }))
+        
+        self.present(alert, animated: true)
     }
 }
