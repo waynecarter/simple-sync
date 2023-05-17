@@ -76,7 +76,7 @@ class ViewController: UIViewController {
             }
         }))
         alert.addAction(UIAlertAction(title: "Privacy Policy", style: .default, handler: { action in
-            if let url = URL(string: "https://github.com/waynecarter/color-sync/blob/main/privacy.md") {
+            if let url = URL(string: "https://github.com/waynecarter/color-sync/blob/main/PRIVACY.md") {
                 UIApplication.shared.open(url)
             }
         }))
