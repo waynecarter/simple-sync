@@ -19,7 +19,9 @@ class ViewController: UIViewController {
         let database = try! Database(name: "color-sync")
         collection = try! database.defaultCollection()
         
-        // Get the identity and CA async and then start the app service.
+        // Get the identity and CA async and then start the app service. The
+        // app service listens, discovers, and syncs data with nearby devices
+        // using a peer-to-peer connection.
         Credentials.async { [self] identity, ca in
             colorSyncService = AppService(
                 name: "color-sync",
