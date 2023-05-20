@@ -1,8 +1,8 @@
-# Simple P2P
+# Color Sync
 
-This example demonstrates how to set up data synchronization with Couchbase Lite in a peer-to-peer network. The example allows for seamless data syncing across a variety of network interfaces, including Wi-Fi networks, device-to-device Wi-Fi, and Bluetooth.
+This example demonstrates how to set up Couchbase Lite in a peer-to-peer network and seamlessly sync date between devices, with or without the internet.
 
-This enables real-time collaboration and data sharing between nearby devices without the need for an intermediary server or access point, making it an ideal solution for apps that need to sync data with or without the internet.
+This enables real-time collaboration and data sharing between nearby devices without the need for an intermediary server or access point. This is an ideal solution for apps that need to communicate even when internet connectivity is not avilable.
 
 ## Setup
 1. Clone the repo
