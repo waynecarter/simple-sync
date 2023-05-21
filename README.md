@@ -2,7 +2,7 @@
 
 This example demonstrates how to set up Couchbase Lite in a peer-to-peer network and seamlessly sync date between devices, with or without the internet.
 
-This enables real-time collaboration and data sharing between nearby devices without the need for an intermediary server or access point. This is an ideal solution for apps that need to communicate even when internet connectivity is not avilable.
+This enables real-time collaboration and data sharing between nearby devices without the need for an intermediary server or access point. This is an ideal solution for apps that need to maintain continuity between devices even when internet connectivity is not avilable.
 
 ## Setup
 1. Clone the repo
