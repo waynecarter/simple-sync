@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>We need to access your local network to discover and connect to other devices for color synchronization.</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_color-sync._tcp</string>
