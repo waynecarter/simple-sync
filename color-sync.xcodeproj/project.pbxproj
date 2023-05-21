@@ -47,6 +47,7 @@
 		B00D637A29FD74FF00825DDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B00D63A029FDEB0800825DDB /* ca_cert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ca_cert.der; sourceTree = "<group>"; };
 		B00D63A729FDF78200825DDB /* client_identity.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client_identity.p12; sourceTree = "<group>"; };
+		B0778F702A19CD610008269D /* color-sync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "color-sync.entitlements"; sourceTree = "<group>"; };
 		B08241A02A12AA8900FE960A /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "../../../Downloads/couchbase-lite-swift_xc_enterprise_3/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
 		B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "color-sync/Frameworks/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
 		B09F7A392A00A45400022B9E /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
@@ -87,6 +88,7 @@
 		B00D636B29FD74FC00825DDB /* color-sync */ = {
 			isa = PBXGroup;
 			children = (
+				B0778F702A19CD610008269D /* color-sync.entitlements */,
 				B00D636C29FD74FC00825DDB /* AppDelegate.swift */,
 				B00D636E29FD74FC00825DDB /* SceneDelegate.swift */,
 				B00D637029FD74FC00825DDB /* ViewController.swift */,
@@ -345,6 +347,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "color-sync/color-sync.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = FMV3C84SQX;
@@ -369,6 +372,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.smplthings.ColorSync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -380,6 +386,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "color-sync/color-sync.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = FMV3C84SQX;
@@ -404,6 +411,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.smplthings.ColorSync;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
