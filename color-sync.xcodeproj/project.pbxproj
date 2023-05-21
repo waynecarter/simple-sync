@@ -48,11 +48,9 @@
 		B00D63A029FDEB0800825DDB /* ca_cert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ca_cert.der; sourceTree = "<group>"; };
 		B00D63A729FDF78200825DDB /* client_identity.p12 */ = {isa = PBXFileReference; lastKnownFileType = file; path = client_identity.p12; sourceTree = "<group>"; };
 		B0778F702A19CD610008269D /* color-sync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "color-sync.entitlements"; sourceTree = "<group>"; };
-		B08241A02A12AA8900FE960A /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "../../../Downloads/couchbase-lite-swift_xc_enterprise_3/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
 		B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "color-sync/Frameworks/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
 		B09F7A392A00A45400022B9E /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		B0DB1AE22A00D5450036F651 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		B0DB1AEB2A01A8880036F651 /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "simple-p2p/Frameworks/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
 		B0F1C88A29FF89450022FC25 /* AppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,8 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */,
-				B08241A02A12AA8900FE960A /* CouchbaseLiteSwift.xcframework */,
-				B0DB1AEB2A01A8880036F651 /* CouchbaseLiteSwift.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
