@@ -2,7 +2,9 @@
 
 This example demonstrates how to set up Couchbase Lite in a peer-to-peer network and seamlessly sync date between devices, with or without the internet.
 
-This enables real-time collaboration and data sharing between nearby devices without the need for an intermediary server or access point. This is an ideal solution for apps that need to maintain continuity between devices even when internet connectivity is not avilable.
+This enables real-time collaboration and data sharing between nearby devices without the need for an intermediary server or access point. This is an ideal solution for apps that need to maintain data continuity between devices even when internet connectivity is not avilable.
+
+If you can sync a color, you can sync anything.
 
 [<img alt="Download on the App Store" src="images/download.svg" width="120" height="40" />](https://apps.apple.com/us/app/simple-color-sync/id6449199482)
 
