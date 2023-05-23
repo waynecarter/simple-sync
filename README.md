@@ -13,5 +13,6 @@ If you can sync a color, you can sync anything.
 2. Download the latest [CouchbaseLiteSwift.xcframework](https://www.couchbase.com/downloads/?family=couchbase-lite) and copy it to the project's `Frameworks` directory.
 3. Run the app on two or more simulators, phones, or tablets.
 4. Tap the screen and the color will change and sync with the other devices.
+5. To check out the code, start in the `ViewController` class.
 
 **NOTE:** The included `gen-credentials.sh` script was used to generate the credentials included with the project. If you want to generate new credentials, run that script again and replace the files in the the project's `credentials` folder with the newly generated files.
