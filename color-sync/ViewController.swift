@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Set up the database and collection.
-        let database = try! Database(name: "color-sync")
+        let database = Database.shared
         collection = try! database.defaultCollection()
         
         // Get the identity and CA async and then start the app service. The
@@ -35,17 +35,21 @@ class ViewController: UIViewController {
         
         // Listen for changes to the profile document.
         _ = collection.addDocumentChangeListener(id: "profile") { [weak self] _ in
-            self?.applyProfileColor()
+            self?.showProfileColor()
         }
         
         // Listen for taps on the screen.
-       let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
-       view.addGestureRecognizer(tapRecognizer)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        view.addGestureRecognizer(tapRecognizer)
         
-        applyProfileColor()
+        showProfileColor()
     }
     
     @objc func viewTapped() {
+        setProfileColor()
+    }
+    
+    private func setProfileColor() {
         // Change the profile color.
         let color = Colors.randomColor(excluding: view.backgroundColor)
         let profile = (try? collection.document(id: "profile")?.toMutable()) ?? MutableDocument(id: "profile")
@@ -54,7 +58,7 @@ class ViewController: UIViewController {
         try? collection.save(document: profile)
     }
     
-    private func applyProfileColor() {
+    private func showProfileColor() {
         // Read the color from the profile and set the background color.
         if let profile = try? collection.document(id: "profile"),
            let color = Colors.colorFromHex(profile.string(forKey: "color"))

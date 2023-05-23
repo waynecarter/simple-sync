@@ -18,6 +18,7 @@
 		B08241A52A12AA9900FE960A /* CouchbaseLiteSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */; };
 		B08241A62A12AA9900FE960A /* CouchbaseLiteSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B09F7A3A2A00A45400022B9E /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09F7A392A00A45400022B9E /* Credentials.swift */; };
+		B0A479802A1C7A040013E8B8 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A4797F2A1C7A040013E8B8 /* Database.swift */; };
 		B0DB1AE32A00D5450036F651 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0DB1AE22A00D5450036F651 /* Colors.swift */; };
 		B0F1C88B29FF89450022FC25 /* AppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F1C88A29FF89450022FC25 /* AppService.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		B0778F702A19CD610008269D /* color-sync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "color-sync.entitlements"; sourceTree = "<group>"; };
 		B08241A42A12AA9900FE960A /* CouchbaseLiteSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteSwift.xcframework; path = "color-sync/Frameworks/CouchbaseLiteSwift.xcframework"; sourceTree = "<group>"; };
 		B09F7A392A00A45400022B9E /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		B0A4797F2A1C7A040013E8B8 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		B0DB1AE22A00D5450036F651 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		B0F1C88A29FF89450022FC25 /* AppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +93,7 @@
 				B00D636E29FD74FC00825DDB /* SceneDelegate.swift */,
 				B00D637029FD74FC00825DDB /* ViewController.swift */,
 				B0F1C88A29FF89450022FC25 /* AppService.swift */,
+				B0A4797F2A1C7A040013E8B8 /* Database.swift */,
 				B09F7A392A00A45400022B9E /* Credentials.swift */,
 				B0DB1AE22A00D5450036F651 /* Colors.swift */,
 				B00D638E29FDD6A400825DDB /* credentials */,
@@ -198,6 +201,7 @@
 				B09F7A3A2A00A45400022B9E /* Credentials.swift in Sources */,
 				B00D637129FD74FC00825DDB /* ViewController.swift in Sources */,
 				B00D636D29FD74FC00825DDB /* AppDelegate.swift in Sources */,
+				B0A479802A1C7A040013E8B8 /* Database.swift in Sources */,
 				B00D636F29FD74FC00825DDB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
