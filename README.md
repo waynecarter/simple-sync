@@ -1,4 +1,4 @@
-# Color Sync
+<img alt="Color Sync" src="images/logo.svg" width="225" />
 
 This example demonstrates how to use [Couchbase Lite](https://www.couchbase.com/products/lite/) in a peer-to-peer network and seamlessly sync date between devices, with or without the internet.
 
