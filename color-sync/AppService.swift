@@ -390,6 +390,7 @@ final class AppService {
                     self?.replicatorConnection?.close(
                         error: MessagingError(error: error, isRecoverable: false)
                     )
+                    self?.connection.cancel()
                 } else {
                     if let data = data {
                         Log.info("Received data: \(data)")
