@@ -384,9 +384,7 @@ final class AppService {
         }
         
         private func receive() {
-            let minimumIncompleteLength = 1
-            let maximumLength = 65536
-            connection.receive(minimumIncompleteLength: minimumIncompleteLength, maximumLength: maximumLength) { [weak self] (data, _, _, error) in
+            connection.receive(minimumIncompleteLength: 1, maximumLength: 65536) { [weak self] (data, _, _, error) in
                 if let error = error {
                     Log.error("Receive error: \(error)")
                     self?.replicatorConnection?.close(
