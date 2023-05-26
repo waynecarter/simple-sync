@@ -11,6 +11,3 @@ xcuserdata/
 # But do not ignore .sh and .cnf files in gen-credentials
 !/gen-credentials/*.sh
 !/gen-credentials/*.cnf
-
-# Ignore the videos directory
-/videos/
