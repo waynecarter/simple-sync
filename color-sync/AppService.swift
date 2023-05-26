@@ -119,7 +119,7 @@ final class AppService {
     // MARK: Trust verification
 
     private let trustEvaluationQueue = DispatchQueue(label: "TrustEvaluationQueue")
-    private func trustVerificationBlock(_ caCertificate: SecCertificate) -> sec_protocol_verify_t {
+    private var trustVerificationBlock: sec_protocol_verify_t {
         return { sec_protocol_metadata, sec_trust, sec_protocol_verify_complete in
             self.trustEvaluationQueue.async {
                 // Create a SecTrust object with the provided sec_trust
@@ -132,7 +132,7 @@ final class AppService {
                 SecTrustSetPolicies(secTrust, policy)
                 
                 // Set the trust anchor to the trusted root CA certificate.
-                SecTrustSetAnchorCertificates(secTrust, [caCertificate] as CFArray)
+                SecTrustSetAnchorCertificates(secTrust, [self.ca] as CFArray)
                 // Re-enable the system certificates.
                 SecTrustSetAnchorCertificatesOnly(secTrust, false)
                 
@@ -151,7 +151,7 @@ final class AppService {
         let tlsOptions = NWProtocolTLS.Options()
         let identity = sec_identity_create(identity)!
         sec_protocol_options_set_local_identity(tlsOptions.securityProtocolOptions, identity)
-        sec_protocol_options_set_verify_block(tlsOptions.securityProtocolOptions, trustVerificationBlock(ca), trustEvaluationQueue)
+        sec_protocol_options_set_verify_block(tlsOptions.securityProtocolOptions, trustVerificationBlock, trustEvaluationQueue)
         
         // Configure the NWParameters with TLS
         let params = NWParameters(tls: tlsOptions)
