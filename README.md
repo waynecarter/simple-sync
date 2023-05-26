@@ -9,7 +9,7 @@ If you can sync a color, you can sync anything.
 [<img alt="Download on the App Store" src="images/download.svg" width="120" height="40" />](https://apps.apple.com/us/app/simple-color-sync/id6449199482)
 
 ## Watch the Demo
-<a href="https://drive.google.com/file/d/16krxD1DRX_d-FOgRtpYdPrmdQkgPFDXk/view?usp=share_link" target="_blank">
+<a href="https://drive.google.com/file/d/16krxD1DRX_d-FOgRtpYdPrmdQkgPFDXk/view?usp=share_link">
   <img alt="Download on the App Store" src="images/demo-placeholder.png" width="520" />
 </a>
 
