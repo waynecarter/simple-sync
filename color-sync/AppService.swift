@@ -177,7 +177,7 @@ final class AppService {
                 using: networkParameters
             )
         } catch {
-            Log.info("Failed to create listener: \(error)")
+            Log.error("Failed to create listener: \(error)")
             return nil
         }
 
@@ -201,7 +201,7 @@ final class AppService {
             case .ready:
                 Log.info("Listener is ready")
             case .failed(let error):
-                Log.info("Listener stopped with error: \(error)")
+                Log.error("Listener stopped with error: \(error)")
             case .cancelled:
                 Log.info("Listener stopped with state: cancelled")
             default:
@@ -256,7 +256,7 @@ final class AppService {
             case .ready:
                 Log.info("Browser is ready")
             case .failed(let error):
-                Log.info("Browser stopped with error: \(error)")
+                Log.error("Browser stopped with error: \(error)")
             case .cancelled:
                 Log.info("Browser stopped with state: cancelled")
             default:
@@ -274,8 +274,8 @@ final class AppService {
                 Log.info("Connection ready: \(connection)")
                 self?.connections.append(connection)
                 self?.setupMessageEndpointConnection(connection)
-            case .failed:
-                Log.info("Connection failed: \(connection)")
+            case .failed(let error):
+                Log.error("Connection failed with error: \(error)")
                 self?.cleanupConnection(connection)
             case .cancelled:
                 Log.info("Connection cancelled: \(connection)")
@@ -299,8 +299,8 @@ final class AppService {
                 Log.info("Connection ready: \(connection)")
                 self?.connections.append(connection)
                 self?.setupReplicator(for: connection)
-            case .failed:
-                Log.info("Connection failed: \(connection)")
+            case .failed(let error):
+                Log.error("Connection failed with error: \(error)")
                 self?.cleanupConnection(connection)
             case .cancelled:
                 Log.info("Connection cancelled: \(connection)")
@@ -375,7 +375,7 @@ final class AppService {
             Log.info("Sending data: \(data)")
             connection.send(content: data, contentContext: .defaultMessage, isComplete: true, completion: .contentProcessed({ error in
                 if let error = error {
-                    Log.info("Send error: \(error)")
+                    Log.error("Send error: \(error)")
                     completion(true, CouchbaseLiteSwift.MessagingError(error: error, isRecoverable: false))
                 } else {
                     completion(true, nil)
@@ -388,7 +388,7 @@ final class AppService {
             let maximumLength = 65536
             connection.receive(minimumIncompleteLength: minimumIncompleteLength, maximumLength: maximumLength) { [weak self] (data, _, _, error) in
                 if let error = error {
-                    Log.info("Receive error: \(error)")
+                    Log.error("Receive error: \(error)")
                     self?.replicatorConnection?.close(
                         error: MessagingError(error: error, isRecoverable: false)
                     )
@@ -439,12 +439,20 @@ final class AppService {
         static private let logger = OSLog(subsystem: "color-sync", category: "network")
         
         static func info(_ message: String) {
+            log(message, type: .info)
+        }
+        
+        static func error(_ message: String) {
+            log(message, type: .error)
+        }
+        
+        private static func log(_ message: String, type: OSLogType) {
             let isDebuggerAttached = isatty(STDERR_FILENO) != 0
             
             if isDebuggerAttached {
                 print(message)
             } else {
-                os_log("%{public}@", log: logger, type: .info, message)
+                os_log("%{public}@", log: logger, type: type, message)
             }
         }
     }
