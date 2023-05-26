@@ -133,8 +133,8 @@ final class AppService {
                 
                 // Set the trust anchor to the trusted root CA certificate.
                 SecTrustSetAnchorCertificates(secTrust, [self.ca] as CFArray)
-                // Re-enable the system certificates.
-                SecTrustSetAnchorCertificatesOnly(secTrust, false)
+                // Disable the built in system anchor certificates.
+                SecTrustSetAnchorCertificatesOnly(secTrust, true)
                 
                 // Evaluate the trust of the certificate.
                 SecTrustEvaluateAsyncWithError(secTrust, self.trustEvaluationQueue) { secTrust, trusted, error in
