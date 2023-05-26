@@ -22,7 +22,8 @@ final class AppService {
     private var listener: NWListener?
     private var browser: NWBrowser?
     private var connections = [NWConnection]()
-    private var messageEndpointListeners = [HashableObject : MessageEndpointListener]()
+    private var messageEndpointListener: MessageEndpointListener
+    private var messageEndpointConnections = [HashableObject : NMMessageEndpointConnection]()
     private var replicators = [HashableObject : Replicator]()
     
     private let networkMonitor = NWPathMonitor()
@@ -34,6 +35,9 @@ final class AppService {
         self.collections = collections
         self.identity = identity
         self.ca = ca
+        
+        let config = MessageEndpointListenerConfiguration(collections: collections, protocolType: .byteStream)
+        messageEndpointListener = MessageEndpointListener(config: config)
         
         // Monitor the network and pause/resume when connectivity changes.
         networkMonitor.pathUpdateHandler = { [weak self] path in
@@ -113,6 +117,9 @@ final class AppService {
             connections.forEach { connection in
                 cleanupConnection(connection)
             }
+            
+            // Close all active message endpoint connections.
+            messageEndpointListener.closeAll()
         }
     }
     
@@ -266,7 +273,7 @@ final class AppService {
             case .ready:
                 Log.info("Connection ready: \(connection)")
                 self?.connections.append(connection)
-                self?.setupMessageEndpointListener(for: connection)
+                self?.setupMessageEndpointConnection(connection)
             case .failed:
                 Log.info("Connection failed: \(connection)")
                 self?.cleanupConnection(connection)
@@ -307,13 +314,11 @@ final class AppService {
 
     // MARK: Replication
     
-    private func setupMessageEndpointListener(for connection: NWConnection) {
-        let config = MessageEndpointListenerConfiguration(collections: collections, protocolType: .byteStream)
+    private func setupMessageEndpointConnection(_ connection: NWConnection) {
         let messageEndpointConnection = NMMessageEndpointConnection(connection: connection)
-        let messageEndpointListener = MessageEndpointListener(config: config)
         messageEndpointListener.accept(connection: messageEndpointConnection)
         
-        messageEndpointListeners[HashableObject(connection)] = messageEndpointListener
+        messageEndpointConnections[HashableObject(connection)] = messageEndpointConnection
     }
     
     private func setupReplicator(for connection: NWConnection) {
@@ -407,8 +412,8 @@ final class AppService {
     
     private func cleanupConnection(_ connection: NWConnection) {
         // For passive peers, remove and stop the endpoint listener.
-        if let messageEndpointListener = messageEndpointListeners.removeValue(forKey: HashableObject(connection)) {
-            messageEndpointListener.closeAll()
+        if let messageEndpointConnection = messageEndpointConnections.removeValue(forKey: HashableObject(connection)) {
+            messageEndpointListener.close(connection: messageEndpointConnection)
         }
 
         // For active peers, remove and stop the replicator.
