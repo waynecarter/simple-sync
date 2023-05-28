@@ -28,6 +28,10 @@ final class AppService {
     
     private let networkMonitor = NWPathMonitor()
     private let networkQueue = DispatchQueue(label: "NetworkQueue", target: .global())
+    
+    convenience init(name: String, database: CouchbaseLiteSwift.Database, identity: SecIdentity, ca: SecCertificate) {
+        self.init(name: name, database: database, collections: [try! database.defaultCollection()], identity: identity, ca: ca)
+    }
 
     init(name: String, database: CouchbaseLiteSwift.Database, collections: [CouchbaseLiteSwift.Collection], identity: SecIdentity, ca: SecCertificate) {
         self.name = name

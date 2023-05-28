@@ -26,7 +26,6 @@ class ViewController: UIViewController {
             colorSyncService = AppService(
                 name: "color-sync",
                 database: database,
-                collections: [collection],
                 identity: identity,
                 ca: ca
             )
