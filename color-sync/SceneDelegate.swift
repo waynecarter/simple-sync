@@ -19,11 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Instantiate the UINavigationController from the storyboard.
         guard let navigationController = storyboard.instantiateInitialViewController() as? UINavigationController else { return }
         
-        // If we've already sync'd before then just show the sync view, otherwise
+        // If we've already sync'd before then just show the main view, otherwise
         // show the intro view first.
         var viewControllers = [UIViewController]()
-        let colorSyncVC = storyboard.instantiateViewController(withIdentifier: "ColorSyncViewController")
-        viewControllers.append(colorSyncVC)
+        let mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
+        viewControllers.append(mainVC)
         if Database.exists == false {
             let introVC = storyboard.instantiateViewController(withIdentifier: "IntroViewController")
             viewControllers.append(introVC)
