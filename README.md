@@ -10,7 +10,7 @@ If you can sync a color, you can sync anything.
 
 # Watch the Demo
 <a href="https://drive.google.com/file/d/16krxD1DRX_d-FOgRtpYdPrmdQkgPFDXk/view?usp=share_link">
-  <img alt="Download on the App Store" src="images/demo-placeholder.png" width="520" />
+  <img alt="Watch the Demo Video" src="images/demo-placeholder.png" width="520" />
 </a>
 
 # Explore the Source Code
