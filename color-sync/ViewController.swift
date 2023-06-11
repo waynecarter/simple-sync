@@ -63,11 +63,11 @@ class ViewController: UIViewController {
            let color = Colors.colorFromHex(profile.string(forKey: "color"))
         {
             view.backgroundColor = color
-            instructionsLabel.isHidden = true
+            instructionsView.isHidden = true
         }
     }
     
-    @IBOutlet weak var instructionsLabel: UILabel!
+    @IBOutlet weak var instructionsView: UIView!
     
     // Info
     
