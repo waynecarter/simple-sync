@@ -1,6 +1,6 @@
 # Color Sync
 
-This example demonstrates how to use [Couchbase Lite](https://www.couchbase.com/products/lite/) in a peer-to-peer network and seamlessly sync date between devices, with or without the internet.
+This example demonstrates how to use [Couchbase Lite](https://docs.couchbase.com/couchbase-lite/current/) in a peer-to-peer network and seamlessly sync date between devices, with or without the internet.
 
 This enables real-time collaboration and data sharing between nearby devices without the need for an intermediary server or access point. This is an ideal solution for apps that need to maintain data continuity between devices even when internet connectivity is not avilable.
 
