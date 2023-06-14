@@ -94,12 +94,11 @@
 				B00D637029FD74FC00825DDB /* ViewController.swift */,
 				B0F1C88A29FF89450022FC25 /* AppService.swift */,
 				B0A4797F2A1C7A040013E8B8 /* Database.swift */,
-				B09F7A392A00A45400022B9E /* Credentials.swift */,
 				B0DB1AE22A00D5450036F651 /* Colors.swift */,
-				B00D638E29FDD6A400825DDB /* credentials */,
+				B00D638E29FDD6A400825DDB /* Credentials */,
 				B00D637229FD74FC00825DDB /* Main.storyboard */,
-				B00D637529FD74FF00825DDB /* Assets.xcassets */,
 				B00D637729FD74FF00825DDB /* LaunchScreen.storyboard */,
+				B00D637529FD74FF00825DDB /* Assets.xcassets */,
 				B00D637A29FD74FF00825DDB /* Info.plist */,
 			);
 			path = "color-sync";
@@ -113,13 +112,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B00D638E29FDD6A400825DDB /* credentials */ = {
+		B00D638E29FDD6A400825DDB /* Credentials */ = {
 			isa = PBXGroup;
 			children = (
+				B09F7A392A00A45400022B9E /* Credentials.swift */,
 				B00D63A029FDEB0800825DDB /* ca_cert.der */,
 				B00D63A729FDF78200825DDB /* client_identity.p12 */,
 			);
-			path = credentials;
+			path = Credentials;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
