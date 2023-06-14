@@ -1,6 +1,6 @@
 # Color Sync
 
-This example demonstrates how to use [Couchbase Lite](https://www.couchbase.com/products/lite/) in a peer-to-peer network and seamlessly sync date between devices, with or without the internet.
+This example demonstrates how to use [Couchbase Lite](https://docs.couchbase.com/couchbase-lite/current/) in a peer-to-peer network and seamlessly sync date between devices, with or without the internet.
 
 This enables real-time collaboration and data sharing between nearby devices without the need for an intermediary server or access point. This is an ideal solution for apps that need to maintain data continuity between devices even when internet connectivity is not avilable.
 
@@ -8,12 +8,12 @@ If you can sync a color, you can sync anything.
 
 [<img alt="Download on the App Store" src="images/download.svg" width="120" height="40" />](https://apps.apple.com/us/app/simple-color-sync/id6449199482)
 
-## Watch the Demo
+# Watch the Demo
 <a href="https://drive.google.com/file/d/16krxD1DRX_d-FOgRtpYdPrmdQkgPFDXk/view?usp=share_link">
-  <img alt="Download on the App Store" src="images/demo-placeholder.png" width="520" />
+  <img alt="Watch the Demo Video" src="images/demo-placeholder.png" width="520" />
 </a>
 
-## Explore the Source Code
+# Explore the Source Code
 1. Clone the repo
 2. Download the latest [CouchbaseLiteSwift.xcframework](https://www.couchbase.com/downloads/?family=couchbase-lite) and copy it to the project's `Frameworks` directory.
 3. Run the app on two or more simulators, phones, or tablets.
