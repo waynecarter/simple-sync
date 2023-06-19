@@ -75,6 +75,11 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         alert.popoverPresentationController?.sourceView = sender
         alert.title = "Tap the screen  to load a color and sync with devices around you"
+        alert.addAction(UIAlertAction(title: "Explore the Code", style: .default, handler: { action in
+            if let url = URL(string: "https://github.com/waynecarter/color-sync/") {
+                UIApplication.shared.open(url)
+            }
+        }))
         alert.addAction(UIAlertAction(title: "Terms of Use", style: .default, handler: { action in
             if let url = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/") {
                 UIApplication.shared.open(url)
