@@ -58,12 +58,18 @@ class ViewController: UIViewController {
     }
     
     private func showProfileColor() {
-        // Read the color from the profile and set the background color.
+        // Read the color from the profile.
         if let profile = try? collection.document(id: "profile"),
            let color = Colors.colorFromHex(profile.string(forKey: "color"))
         {
+            // Set the background color to the profile color.
             view.backgroundColor = color
-            instructionsView.isHidden = true
+            
+            // Hide the instructions view the first time we show a color
+            if !instructionsView.isHidden {
+                instructionsView.isHidden = true
+                navigationController?.overrideUserInterfaceStyle = .light
+            }
         }
     }
     
