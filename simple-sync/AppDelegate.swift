@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  color-sync
+//  simple-sync
 //
 //  Created by Wayne Carter on 4/29/23.
 //

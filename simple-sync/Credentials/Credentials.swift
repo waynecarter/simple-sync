@@ -1,6 +1,6 @@
 //
 //  Credentials.swift
-//  color-sync
+//  simple-sync
 //
 //  Created by Wayne Carter on 4/29/23.
 //
@@ -15,8 +15,8 @@ class Credentials {
     }
     
     // NOTE: To simplify the demo this pulls the client identity from a file
-    // embedded in the app. In a realworld use-case the identity would more
-    // than likely be managed using Keychain Services.
+    // embedded in the app. In a realworld use-case the identity would likely
+    // be managed using Keychain Services.
     private static let identity: SecIdentity = {
         let url = Bundle.main.url(forResource: "client_identity", withExtension: "p12")!
         let data = try! Data(contentsOf: url)

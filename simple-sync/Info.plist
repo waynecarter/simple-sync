@@ -3,10 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>We need to access your local network to find and connect to other devices for color synchronization.</string>
+	<string>We need to access your local network to find and connect to other devices for peer-to-peer sync.</string>
 	<key>NSBonjourServices</key>
 	<array>
-		<string>_color-sync._tcp</string>
+		<string>_color._tcp</string>
+		<string>_count._tcp</string>
+		<string>_photo._tcp</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

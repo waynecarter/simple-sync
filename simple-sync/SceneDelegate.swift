@@ -1,6 +1,6 @@
 //
 //  SceneDelegate.swift
-//  color-sync
+//  simple-sync
 //
 //  Created by Wayne Carter on 4/29/23.
 //
@@ -10,30 +10,12 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        // Instantiate the UINavigationController from the storyboard.
-        guard let navigationController = storyboard.instantiateInitialViewController() as? UINavigationController else { return }
-        
-        // If we've already sync'd before then just show the main view, otherwise
-        // show the intro view first.
-        var viewControllers = [UIViewController]()
-        let mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-        viewControllers.append(mainVC)
-        if Database.exists == false {
-            let introVC = storyboard.instantiateViewController(withIdentifier: "IntroViewController")
-            viewControllers.append(introVC)
-        }
-        navigationController.setViewControllers(viewControllers, animated: false)
-        
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = navigationController
-        self.window = window
-        window.makeKeyAndVisible()
+        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+        guard let _ = (scene as? UIWindowScene) else { return }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -66,4 +48,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
