@@ -6,9 +6,11 @@ The Simple Sync app is available for download from the App Store. You can downlo
 
 [<img alt="Download on the App Store" src="images/download.svg" width="120" height="40" />](https://apps.apple.com/us/app/simple-color-sync/id6449199482)
 
+## Introduction
+
 The repository is divided into four major areas, each demonstrating different aspects of data handling and synchronization:
 
-## Color Sync
+### Color Sync
 
 The `ColorViewController` class manages the color sync feature. It demonstrates how to read, write, and sync simple scalar data, and how to react to database changes. This is done by implementing methods for reading and writing color data in the database, and listening for data changes in the database.
 
@@ -25,7 +27,7 @@ profile["color"].string = "green"
 collection.save(document: profile)
 ```
 
-## Photo Sync
+### Photo Sync
 
 The `PhotoViewController` class manages the photo sync feature. It demonstrates how to read, write, and sync binary data, and how to react to database changes. This is done by implementing methods for reading and writing photo data in the database, and listening for data changes in the database.
 
@@ -45,7 +47,7 @@ if let pngData = newPhoto.pngData() {
 collection.save(document: profile)
 ```
 
-## Count Sync
+### Count Sync
 
 The `CountViewController` class manages the count sync feature. It demonstrates how to read, write, and sync complex data using a CRDT pn-counter, and how to react to database changes. This is done by implementing methods for incrementing and decrementing counter data in the database, and listening for data changes in the database.
 
@@ -64,11 +66,11 @@ count.decrement(by: 1)
 collection.save(document: item)
 ```
 
-## Search
+### Search
 
 The `SearchViewController` class manages the search feature. It demonstrates how to use Couchbase Lite’s SQL, full-text search, and indexing capabilities. This is done by implementing a method for executing a query on the database when search input changes.
 
-### SQL
+#### SQL
 
 ```sql
 SELECT name, image
@@ -77,7 +79,7 @@ WHERE category = $category AND MATCH(NameColorAndCategoryIndex, $search)
 ORDER BY RANK(NameColorAndCategoryIndex), name
 ```
 
-### Index
+#### Index
 
 ```swift
 // Create an index on the "name" field for fast sorting.
@@ -93,7 +95,7 @@ let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
 collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
 ```
 
-### Query
+#### Query
 
 ```swift
 // Create the query.
@@ -128,7 +130,7 @@ app.start()
 
 **NOTE:** The included `gen-credentials.sh` script was used to generate the credentials included with the project. If you want to generate new credentials, run that script again and replace the files in the project's credentials folder with the newly generated files.
 
-# Run the Project
+## Run the Project
 
 1. Clone or download this repository
 2. Download the latest [CouchbaseLiteSwift.xcframework](https://www.couchbase.com/downloads/?family=couchbase-lite) and copy it to the project's `Frameworks` directory.
@@ -141,7 +143,7 @@ app.start()
 
 <img alt="Watch the Demo Video" src="images/demo-placeholder.png" />
 
-## Source Files
+### Source Files
 
 To explore the code, start with the following source files:
 
