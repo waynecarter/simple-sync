@@ -32,15 +32,33 @@ class Settings: ObservableObject {
         
         // Get the endpoint.
         let endpointEnabled = userDefaults.bool(forKey: "endpoint_enabled")
-        if endpointEnabled, let endpointUrl = userDefaults.string(forKey: "endpoint_url").flatMap(URL.init) {
-            newEndpoint = App.Endpoint(
-                url: endpointUrl,
-                username: userDefaults.string(forKey: "endpoint_username"),
-                password: userDefaults.string(forKey: "endpoint_password")
-            )
+        if endpointEnabled,
+           let endpointUrlString = userDefaults.string(forKey: "endpoint_url"),
+           let endpointUrl = URL(string: endpointUrlString)
+        {
+            // Construct the URL from it's component parts, only allowing web-socket schemes.
+            if let scheme = endpointUrl.scheme?.lowercased(),
+               scheme == "wss" || scheme == "ws",
+               let host = endpointUrl.host,
+               let port = endpointUrl.port
+            {
+                var components = URLComponents()
+                components.scheme = scheme
+                components.host = host
+                components.port = port
+
+                // If we are able to construct a valid URL, create a new endpoint.
+                if let url = components.url {
+                    newEndpoint = App.Endpoint(
+                        url: url,
+                        username: userDefaults.string(forKey: "endpoint_username"),
+                        password: userDefaults.string(forKey: "endpoint_password")
+                    )
+                }
+            }
         }
         
-        // If the remote endpoint has changed, update it.
+        // If the endpoint has changed, update it.
         if newEndpoint != endpoint {
             endpoint = newEndpoint
         }

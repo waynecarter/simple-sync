@@ -524,11 +524,8 @@ final class App {
     private func createEndpointReplicator() -> Replicator? {
         guard let endpoint = endpoint else { return nil }
         
-        // Remove any last path component from the provided URL, and append the name
-        // of the app. This is to be a bit forgiving if an endpoint is provided
-        // containing a path component that doesn't match the name of the app but
-        // the server and port are correct.
-        let url = endpoint.url.deletingLastPathComponent().appending(path: name)
+        // Append the name of the app as the last path component of the endpoint URL.
+        let url = endpoint.url.appending(path: name)
         
         // Set up the target endpoint.
         let target = URLEndpoint(url: url)
