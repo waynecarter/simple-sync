@@ -141,7 +141,7 @@ app.start()
    3. Tap on the `Count` view, tap the buttons and the count will change and sync with other devices.
    3. Tap on the `Search` view, search using name, color, category, and more.
 
-<img alt="Watch the Demo Video" src="images/demo-placeholder.png" />
+<img alt="Watch the Demo Video" src="images/demo-screenshot.png" />
 
 ### Source Files
 
