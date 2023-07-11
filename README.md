@@ -79,22 +79,6 @@ WHERE category = $category AND MATCH(NameColorAndCategoryIndex, $search)
 ORDER BY RANK(NameColorAndCategoryIndex), name
 ```
 
-#### Index
-
-```swift
-// Create an index on the "name" field for fast sorting.
-let nameIndex = ValueIndexConfiguration(["name"])
-collection.createIndex(withName: "NameIndex", config: nameIndex)
-
-// Create an index on the "category" field for fast predicates.
-let categoryIndex = ValueIndexConfiguration(["category"])
-collection.createIndex(withName: "CategoryIndex", config: categoryIndex)
-
-// Create a full-text search index on the "name", "color", and "category" fields.
-let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
-collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
-```
-
 #### Query
 
 ```swift
@@ -108,6 +92,22 @@ query.parameters = Parameters()
 
 // Execute the query.
 let results = try query.execute()
+```
+
+#### Indexing
+
+```swift
+// Create an index on the "name" field for fast sorting.
+let nameIndex = ValueIndexConfiguration(["name"])
+collection.createIndex(withName: "NameIndex", config: nameIndex)
+
+// Create an index on the "category" field for fast predicates.
+let categoryIndex = ValueIndexConfiguration(["category"])
+collection.createIndex(withName: "CategoryIndex", config: categoryIndex)
+
+// Create a full-text search index on the "name", "color", and "category" fields.
+let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
+collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
 ```
 
 ## App
