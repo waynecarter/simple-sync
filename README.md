@@ -16,7 +16,7 @@ The `ColorViewController` class manages the color sync feature. It demonstrates 
 
 ```swift
 // Get the "profile1" document from the database collection.
-let profile = collection.document(id: "profile1")
+let profile = collection["profile1"].document
 // Get the color from the profile.
 let color = profile["color"].string
 
@@ -42,7 +42,7 @@ The `PhotoViewController` class manages the photo sync feature. It demonstrates 
 
 ```swift
 // Get the "profile1" document from the database collection.
-let profile = collection.document(id: "profile1")
+let profile = collection["profile1"].document
 // Get the photo from the profile.
 let photo = profile["photo"].blob
 
@@ -62,7 +62,7 @@ The `CountViewController` class manages the count sync feature. It demonstrates 
 
 ```swift
 // Get the "item1" document from the database collection.
-let item = collection.document(id: "item1")
+let item = collection["item1"].document
 // Get the counter from the item.
 var count = item.counter(forKey: "count")
 
