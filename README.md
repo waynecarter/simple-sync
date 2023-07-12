@@ -121,7 +121,7 @@ collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
 
 ## App
 
-The `App` class manages the overall synchronization of the application. It demonstrates how to sync peer-to-peer and with an endpoint over the internet. The class handles network management, monitoring, and trust verification. 
+The `App` class manages the overall synchronization of the application using Couchbase Lite's sync capabilities. It demonstrates how to sync peer-to-peer and with an endpoint over the internet. The class handles network management, monitoring, and trust verification. 
 
 ```swift
 // Create the app passing the database to sync, the sync endpoint, and the identity
