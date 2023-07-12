@@ -2,7 +2,7 @@
 
 Simple Sync is a demonstration of how to read, write, search, and sync data using [Couchbase Lite](https://docs.couchbase.com/couchbase-lite/current/). This repository provides a comprehensive guide to handling different types of data and demonstrates how to synchronize this data across devices, with and without the Internet.
 
-The [Simple Sync app](https://apps.apple.com/us/app/simple-color-sync/id6449199482) is available for download from the App Store. You can download and run the app on your device without any additional setup to see these features in action.
+The [Simple Sync](https://apps.apple.com/us/app/simple-color-sync/id6449199482) app is available for download from the App Store. You can download and run the app on your device without any additional setup to see these features in action.
 
 [<img alt="Download on the App Store" src="images/download.svg" width="120" height="40" />](https://apps.apple.com/us/app/simple-color-sync/id6449199482)
 
