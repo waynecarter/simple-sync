@@ -141,7 +141,7 @@ app.start()
 
 ## Configure an Endpoint
 
-An endpoint can be configured in either [Couchbase Capella](https://cloud.couchbase.com) or a Couchbase Sync Gateway.
+An endpoint can be hosted using either [Couchbase Capella](https://cloud.couchbase.com) or a Couchbase Sync Gateway. Once you have an endpoint up and running, you can connect to it in the Simple Sync app settings. 
 
 In Capella, start with an existing App Service or create a new one. In the App Service, create the following endpoints:
 
