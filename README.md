@@ -100,7 +100,7 @@ query.parameters = Parameters()
     .setString(category, forName: "category")
 
 // Execute the query.
-let results = try query.execute()
+let results = query.execute()
 ```
 
 #### Indexing
