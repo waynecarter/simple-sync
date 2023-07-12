@@ -12,7 +12,7 @@ The code is divided into four major areas, each demonstrating different aspects 
 
 ### Color Sync
 
-The `ColorViewController` class manages the color sync feature. It demonstrates how to read, write, and sync simple scalar data, and how to react to database changes. This is done by implementing methods for reading and writing color data in the database, and listening for data changes in the database.
+The `ColorViewController` class manages the color sync feature. It demonstrates how to read, write, and sync simple scalar data, and how to react to database changes.
 
 ```swift
 // Get the "profile1" document from the database collection.
@@ -29,7 +29,7 @@ collection.save(document: profile)
 
 ### Photo Sync
 
-The `PhotoViewController` class manages the photo sync feature. It demonstrates how to read, write, and sync binary data, and how to react to database changes. This is done by implementing methods for reading and writing photo data in the database, and listening for data changes in the database.
+The `PhotoViewController` class manages the photo sync feature. It demonstrates how to read, write, and sync binary data, and how to react to database changes.
 
 ```swift
 // Get the "profile1" document from the database collection.
@@ -49,7 +49,7 @@ collection.save(document: profile)
 
 ### Count Sync
 
-The `CountViewController` class manages the count sync feature. It demonstrates how to read, write, and sync complex data using a CRDT pn-counter, and how to react to database changes. This is done by implementing methods for incrementing and decrementing counter data in the database, and listening for data changes in the database.
+The `CountViewController` class manages the count sync feature. It demonstrates how to read, write, and sync complex data using a CRDT pn-counter, and how to react to database changes.
 
 ```swift
 // Get the "item1" document from the database collection.
@@ -68,7 +68,7 @@ collection.save(document: item)
 
 ### Search
 
-The `SearchViewController` class manages the search feature. It demonstrates how to use Couchbase Lite’s SQL, full-text search, and indexing capabilities. This is done by implementing a method for executing a query on the database when search input changes.
+The `SearchViewController` class manages the search feature. It demonstrates how to use Couchbase Lite’s SQL, full-text search, and indexing capabilities.
 
 #### SQL
 
