@@ -49,7 +49,7 @@ collection.save(document: profile)
 
 ### Count Sync
 
-The `CountViewController` class manages the count sync feature. It demonstrates how to read, write, and sync complex data using a CRDT pn-counter, and how to react to database changes.
+The `CountViewController` class manages the count sync feature. It demonstrates how to read, write, and sync complex data using a [CRDT](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type) (Conflict-Free Replicated Data Type) PN-Counter (Positive-Negative Counter), and how to react to database changes.
 
 ```swift
 // Get the "item1" document from the database collection.
