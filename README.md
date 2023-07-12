@@ -30,9 +30,9 @@ collection.save(document: profile)
 #### Listen for Changes
 
 ```swift
-// When the profile document changes, refresh the UI.
-collection.addDocumentChangeListener(id: "profile1") {
-    refreshUI()
+// Listen for changes to the profile document.
+collection.addDocumentChangeListener(id: "profile1") { change in
+    // React to the change.
 }
 ```
 
