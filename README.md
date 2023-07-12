@@ -141,11 +141,13 @@ app.start()
 
 ## Configure an Endpoint
 
-An endpoint can be hosted using either [Couchbase Capella](https://cloud.couchbase.com) or a Couchbase Sync Gateway. Once you have an endpoint up and running, you can connect to it in the Simple Sync app settings. 
+An endpoint can be hosted using [Couchbase Capella](https://cloud.couchbase.com) or Couchbase Sync Gateway, and connected in the Simple Sync app settings.
 
-In Capella, start with an existing App Service or create a new one. In the App Service, create the following endpoints:
+### Capella Setup
 
-### Color
+Start with an existing App Service or create a new one. In the App Service, create and configure the following endpoints:
+
+#### Color
 
 1. Create an App Endpoint named “color”
 2. In the App Endpoint, create a user with the Admin Channel “color”
@@ -159,7 +161,7 @@ function(doc, oldDoc, meta) {
 }
 ```
 
-### Photo
+#### Photo
 
 1. Create an App Endpoint named “photo”
 2. In the App Endpoint, create a user with the Admin Channel “photo”
@@ -173,7 +175,7 @@ function(doc, oldDoc, meta) {
 }
 ```
 
-### Count
+#### Count
 
 1. Create an App Endpoint named “count”
 2. In the App Endpoint, create a user with the Admin Channel “count”
