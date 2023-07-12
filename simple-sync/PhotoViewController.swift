@@ -63,7 +63,7 @@ class PhotoViewController: UIViewController {
     
     @objc private func setNewPhoto() {
         // Change the profile photo.
-        let profile = (try? collection.document(id: "profile")?.toMutable()) ?? MutableDocument(id: "profile")
+        let profile = collection["profile"].document?.toMutable() ?? MutableDocument(id: "profile")
         let emoji = profile["emoji"].string
         let nextEmoji = Photos.nextEmoji(emoji)
         let newPhoto = Photos[nextEmoji]
@@ -77,7 +77,7 @@ class PhotoViewController: UIViewController {
     
     private func showPhoto() {
         // Read the color from the profile.
-        if let profile = try? collection.document(id: "profile"),
+        if let profile = collection["profile"].document,
            let imageBlob = profile["photo"].blob,
            let imageData = imageBlob.content
         {

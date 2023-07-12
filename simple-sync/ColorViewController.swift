@@ -63,7 +63,7 @@ class ColorViewController: UIViewController {
 
     @objc private func setNewColor() {
         // Change the profile color.
-        let profile = (try? collection.document(id: "profile")?.toMutable()) ?? MutableDocument(id: "profile")
+        let profile = collection["profile"].document?.toMutable() ?? MutableDocument(id: "profile")
         let colorIndex = profile["color"].value as? Int ?? -1
         let newColorIndex = Colors.nextIndex(colorIndex)
 
@@ -73,7 +73,7 @@ class ColorViewController: UIViewController {
 
     private func showColor() {
         // Read the color from the profile.
-        if let profile = try? collection.document(id: "profile") {
+        if let profile = collection["profile"].document {
             let colorIndex = profile["color"].int
             let color = Colors[colorIndex]
 

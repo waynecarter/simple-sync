@@ -86,7 +86,7 @@ class CountViewController: UIViewController {
     
     private func showCount() {
         // Read the count from the item doc.
-        let item = try? collection.document(id: "item")
+        let item = collection["item"].document
         let counter = item?.counter(forKey: "count")
         let count = counter?.value ?? 0
         
