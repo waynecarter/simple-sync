@@ -8,7 +8,7 @@ The [Simple Sync app](https://apps.apple.com/us/app/simple-color-sync/id64491994
 
 ## Introduction
 
-The repository is divided into four major areas, each demonstrating different aspects of data handling and synchronization:
+The code is divided into four major areas, each demonstrating different aspects of data handling and synchronization:
 
 ### Color Sync
 
