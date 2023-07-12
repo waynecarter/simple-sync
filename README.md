@@ -12,7 +12,7 @@ The code is divided into four major areas, each demonstrating different aspects 
 
 ### Color Sync
 
-The `ColorViewController` class manages the color sync feature. It demonstrates how to read, write, and sync simple scalar data, and how to react to database changes.
+The `ColorViewController` class manages the color sync feature. It demonstrates how to read, write, and sync simple scalar data, and listen for database changes.
 
 ```swift
 // Get the "profile1" document from the database collection.
@@ -27,9 +27,18 @@ profile["color"].string = "green"
 collection.save(document: profile)
 ```
 
+#### Listen for Changes
+
+```swift
+// When the profile document changes, refresh the UI.
+collection.addDocumentChangeListener(id: "profile1") {
+    refreshUI()
+}
+```
+
 ### Photo Sync
 
-The `PhotoViewController` class manages the photo sync feature. It demonstrates how to read, write, and sync binary data, and how to react to database changes.
+The `PhotoViewController` class manages the photo sync feature. It demonstrates how to read, write, and sync binary data.
 
 ```swift
 // Get the "profile1" document from the database collection.
@@ -49,7 +58,7 @@ collection.save(document: profile)
 
 ### Count Sync
 
-The `CountViewController` class manages the count sync feature. It demonstrates how to read, write, and sync complex data using a CRDT [PN-Counter (Positive-Negative Counter)](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#PN-Counter_(Positive-Negative_Counter)), and how to react to database changes.
+The `CountViewController` class manages the count sync feature. It demonstrates how to read, write, and sync complex data using a CRDT [PN-Counter (Positive-Negative Counter)](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#PN-Counter_(Positive-Negative_Counter)).
 
 ```swift
 // Get the "item1" document from the database collection.
