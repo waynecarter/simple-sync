@@ -139,6 +139,54 @@ app.start()
 
 **NOTE:** The included `gen-credentials.sh` script was used to generate the credentials included with the project. If you want to generate new credentials, run that script again and replace the files in the project's credentials folder with the newly generated files.
 
+## Configure an Endpoint
+
+An endpoint can be configured in either [Couchbase Capella](https://cloud.couchbase.com) or a Couchbase Sync Gateway.
+
+In Capella, start with an existing App Service or create a new one. In the App Service, create the following endpoints:
+
+### Color
+
+1. Create an App Endpoint named “color”
+2. In the App Endpoint, create a user with the Admin Channel “color”
+3. Define the Access Control and Data Validation function as:
+```javascript
+function(doc, oldDoc, meta) {
+  if (doc._id !== "profile") {
+    throw new Error();
+  }
+  channel("color");
+}
+```
+
+### Photo
+
+1. Create an App Endpoint named “photo”
+2. In the App Endpoint, create a user with the Admin Channel “photo”
+3. Define the Access Control and Data Validation function as:
+```javascript
+function(doc, oldDoc, meta) {
+  if (doc._id !== "profile") {
+    throw new Error();
+  }
+  channel("photo");
+}
+```
+
+### Count
+
+1. Create an App Endpoint named “count”
+2. In the App Endpoint, create a user with the Admin Channel “count”
+3. Define the Access Control and Data Validation function as:
+```javascript
+function(doc, oldDoc, meta) {
+  if (doc._id !== "item") {
+    throw new Error();
+  }
+  channel("count");
+}
+```
+
 ## Run the Project
 
 1. Clone or download this repository
