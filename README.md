@@ -24,7 +24,7 @@ let color = profile["color"].string
 profile["color"].string = "green"
 
 // Save the document.
-collection.save(document: profile)
+try collection.save(document: profile)
 ```
 
 #### Listen for Changes
@@ -53,7 +53,7 @@ if let pngData = newPhoto.pngData() {
 }
     
 // Save the document.
-collection.save(document: profile)
+try collection.save(document: profile)
 ```
 
 ### Count Sync
@@ -71,8 +71,8 @@ count.increment(by: 1)
 // Decrement the count.
 count.decrement(by: 1)
 
-// Save the document.
-collection.save(document: item)
+// Save the document with concurrency control.
+try collection.save(document: item, concurrencyControl: .failOnConflict)
 ```
 
 ### Search
@@ -92,7 +92,7 @@ ORDER BY RANK(NameColorAndCategoryIndex), name
 
 ```swift
 // Create the query.
-let query = database.createQuery(sql)
+let query = try database.createQuery(sql)
 
 // Set the query parameters.
 query.parameters = Parameters()
@@ -100,7 +100,7 @@ query.parameters = Parameters()
     .setString(category, forName: "category")
 
 // Execute the query.
-let results = query.execute()
+let results = try query.execute()
 ```
 
 #### Indexing
@@ -108,15 +108,15 @@ let results = query.execute()
 ```swift
 // Create an index on the "name" field for fast sorting.
 let nameIndex = ValueIndexConfiguration(["name"])
-collection.createIndex(withName: "NameIndex", config: nameIndex)
+try collection.createIndex(withName: "NameIndex", config: nameIndex)
 
 // Create an index on the "category" field for fast predicates.
 let categoryIndex = ValueIndexConfiguration(["category"])
-collection.createIndex(withName: "CategoryIndex", config: categoryIndex)
+try collection.createIndex(withName: "CategoryIndex", config: categoryIndex)
 
 // Create a full-text search index on the "name", "color", and "category" fields.
 let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
-collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
+try collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
 ```
 
 ## App
