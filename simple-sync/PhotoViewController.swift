@@ -149,13 +149,18 @@ class PhotoViewController: UIViewController {
         }
     }
     
-    // MARK: - Info
+    // MARK: - Actions
     
     @IBAction func infoButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = Alerts.info
+        let alert = Actions.info
         alert.popoverPresentationController?.sourceItem = sender
         alert.title = "Tap the screen, change the photo, and sync with devices around you"
-        
-        self.present(alert, animated: true)
+        present(alert, animated: true)
+    }
+    
+    @IBAction func share(_ sender: UIBarButtonItem) {
+        let activity = Actions.share(for: self)
+        activity.popoverPresentationController?.sourceItem = sender
+        present(activity, animated: true)
     }
 }

@@ -323,13 +323,18 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return UIEdgeInsets(top: itemPadding, left: itemPadding, bottom: itemPadding, right: itemPadding)
     }
     
-    // MARK: - Info
+    // MARK: - Actions
     
     @IBAction func infoButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = Alerts.info
+        let alert = Actions.info
         alert.popoverPresentationController?.sourceItem = sender
         alert.title = "Search using name, color, category, and more"
-        
-        self.present(alert, animated: true)
+        present(alert, animated: true)
+    }
+    
+    @IBAction func share(_ sender: UIBarButtonItem) {
+        let activity = Actions.share(for: self)
+        activity.popoverPresentationController?.sourceItem = sender
+        present(activity, animated: true)
     }
 }

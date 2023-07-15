@@ -66,6 +66,11 @@
                                 <action selector="infoButtonPressed:" destination="wiH-QP-Bee" id="LUd-Nq-DvH"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Nyr-RP-Uvw">
+                            <connections>
+                                <action selector="share:" destination="wiH-QP-Bee" id="Ia2-JO-Ckr"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -122,6 +127,11 @@
                                 <action selector="infoButtonPressed:" destination="0wf-eb-QWm" id="v4A-7T-PeG"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Vj0-qO-CAz">
+                            <connections>
+                                <action selector="share:" destination="0wf-eb-QWm" id="UhF-1l-iUL"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -153,19 +163,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i2n-80-d2k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-3764" y="-118"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="4Bp-bI-faX">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kXU-nd-cZi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <navigationController id="ShC-nj-xgY" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Bt9-yu-qxd">
-                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="-3766" y="-1020"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cws-TC-XVh">
@@ -226,6 +223,11 @@
                         <barButtonItem key="leftBarButtonItem" image="info.circle" catalog="system" id="zJq-Sb-kwZ">
                             <connections>
                                 <action selector="infoButtonPressed:" destination="n5J-ru-T0H" id="y3M-rU-8KG"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="2pY-yh-VlJ">
+                            <connections>
+                                <action selector="share:" destination="n5J-ru-T0H" id="ueH-FN-aza"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -295,11 +297,11 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pSa-sa-zCj">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="101"/>
+                                            <rect key="frame" x="0.0" y="-1" width="128" height="102"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="00P-Ux-GPX">
-                                            <rect key="frame" x="0.0" y="109" width="128" height="19"/>
+                                            <rect key="frame" x="0.0" y="109" width="128" height="18"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -324,6 +326,11 @@
                         <barButtonItem key="leftBarButtonItem" image="info.circle" catalog="system" id="P10-Lg-1Mm">
                             <connections>
                                 <action selector="infoButtonPressed:" destination="7Ok-q5-KMI" id="Sg3-8F-Zfp"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="y4m-8f-OB4">
+                            <connections>
+                                <action selector="share:" destination="7Ok-q5-KMI" id="l90-1P-vcf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
