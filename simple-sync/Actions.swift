@@ -11,36 +11,20 @@ class Actions {
     
     static var info: UIAlertController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Explore the Code", style: .default, handler: { action in
-            if let url = URL(string: "https://github.com/waynecarter/simple-sync/") {
-                UIApplication.shared.open(url)
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { action in
-            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(appSettings)
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Terms of Use", style: .default, handler: { action in
-            if let url = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/") {
-                UIApplication.shared.open(url)
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Privacy Policy", style: .default, handler: { action in
-            if let url = URL(string: "https://github.com/waynecarter/simple-sync/blob/main/PRIVACY") {
-                UIApplication.shared.open(url)
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            alert.dismiss(animated: true)
-        }))
+        alert.addAction(openURLAction(title: "Explore the Code", urlString: "https://github.com/waynecarter/simple-sync/"))
+        alert.addAction(openURLAction(title: "Settings", urlString: UIApplication.openSettingsURLString))
+        alert.addAction(openURLAction(title: "Terms of Use", urlString: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"))
+        alert.addAction(openURLAction(title: "Privacy Policy", urlString: "https://github.com/waynecarter/simple-sync/blob/main/PRIVACY"))
         
         return alert
+    }
+
+    private static func openURLAction(title: String, urlString: String) -> UIAlertAction {
+        return UIAlertAction(title: title, style: .default) { action in
+            if let url = URL(string: urlString) {
+                UIApplication.shared.open(url)
+            }
+        }
     }
     
     static func share(for viewController: UIViewController) -> UIActivityViewController {
@@ -73,17 +57,23 @@ class Actions {
         }
         
         override func perform() {
-            let qrCodeViewController = QRCodeViewController()
-            qrCodeViewController.appURL = appURL
-            qrCodeViewController.modalPresentationStyle = .automatic
-            
+            let qrCodeViewController = QRCodeViewController(appURL: appURL)
             viewController.present(qrCodeViewController, animated: true, completion: nil)
             
             activityDidFinish(true)
         }
         
         private class QRCodeViewController: UIViewController {
-            var appURL: String!
+            private let appURL: String
+                
+            init(appURL: String) {
+                self.appURL = appURL
+                super.init(nibName: nil, bundle: nil)
+            }
+            
+            required init?(coder: NSCoder) {
+                fatalError("init(coder:) has not been implemented")
+            }
 
             override func viewDidLoad() {
                 super.viewDidLoad()
