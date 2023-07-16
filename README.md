@@ -15,7 +15,7 @@ The code is divided into four major areas, each demonstrating different aspects 
 The `ColorViewController` class manages the color sync feature. It demonstrates how to read, write, and sync simple scalar data, and listen for database changes.
 
 ```swift
-// Get the "profile1" document from the database collection.
+// Get the profile document from the database collection.
 let profile = collection["profile1"].document
 // Get the color from the profile.
 let color = profile["color"].string
@@ -41,7 +41,7 @@ collection.addDocumentChangeListener(id: "profile1") { change in
 The `PhotoViewController` class manages the photo sync feature. It demonstrates how to read, write, and sync binary data.
 
 ```swift
-// Get the "profile1" document from the database collection.
+// Get the profile document from the database collection.
 let profile = collection["profile1"].document
 // Get the photo from the profile.
 let photo = profile["photo"].blob
@@ -61,7 +61,7 @@ try collection.save(document: profile)
 The `CountViewController` class manages the count sync feature. It demonstrates how to read, write, and sync complex data using a CRDT [PN-Counter (Positive-Negative Counter)](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type#PN-Counter_(Positive-Negative_Counter)).
 
 ```swift
-// Get the "item1" document from the database collection.
+// Get the item document from the database collection.
 let item = collection["item1"].document
 // Get the counter from the item.
 var count = item.counter(forKey: "count")
@@ -106,15 +106,15 @@ let results = try query.execute()
 #### Indexing
 
 ```swift
-// Create an index on the "name" field for fast sorting.
+// For fast sorting, create an index on the "name" field.
 let nameIndex = ValueIndexConfiguration(["name"])
 try collection.createIndex(withName: "NameIndex", config: nameIndex)
 
-// Create an index on the "category" field for fast predicates.
+// For fast predicates, create an index on the "category" field.
 let categoryIndex = ValueIndexConfiguration(["category"])
 try collection.createIndex(withName: "CategoryIndex", config: categoryIndex)
 
-// Create a full-text search index on the "name", "color", and "category" fields.
+// For fast searches, create a full-text search index on the "name", "color", and "category" fields.
 let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
 try collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
 ```
