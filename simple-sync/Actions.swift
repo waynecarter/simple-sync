@@ -112,7 +112,7 @@ class Actions {
                 
                 // Image container for shadow and corner radius.
                 let imageContainerView = UIView()
-                imageContainerView.backgroundColor = .systemBackground
+                imageContainerView.backgroundColor = .white
                 imageContainerView.layer.cornerRadius = 10
                 imageContainerView.layer.shadowColor = UIColor.black.cgColor
                 imageContainerView.layer.shadowOffset = CGSize(width: 0, height: 2)
