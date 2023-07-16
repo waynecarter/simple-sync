@@ -154,10 +154,10 @@ Start with an existing App Service or create a new one. In the App Service, crea
 3. Define the Access Control and Data Validation function as:
 ```javascript
 function(doc, oldDoc, meta) {
-  if (doc._id !== "profile") {
-    throw new Error();
-  }
-  channel("color");
+    if (doc._id !== "profile") {
+        throw new Error();
+    }
+    channel("color");
 }
 ```
 
@@ -168,10 +168,10 @@ function(doc, oldDoc, meta) {
 3. Define the Access Control and Data Validation function as:
 ```javascript
 function(doc, oldDoc, meta) {
-  if (doc._id !== "profile") {
-    throw new Error();
-  }
-  channel("photo");
+    if (doc._id !== "profile") {
+        throw new Error();
+    }
+    channel("photo");
 }
 ```
 
@@ -182,10 +182,10 @@ function(doc, oldDoc, meta) {
 3. Define the Access Control and Data Validation function as:
 ```javascript
 function(doc, oldDoc, meta) {
-  if (doc._id !== "item") {
-    throw new Error();
-  }
-  channel("count");
+    if (doc._id !== "item") {
+        throw new Error();
+    }
+    channel("count");
 }
 ```
 
