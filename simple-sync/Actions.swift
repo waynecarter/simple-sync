@@ -15,6 +15,9 @@ class Actions {
         alert.addAction(openURLAction(title: "Settings", urlString: UIApplication.openSettingsURLString))
         alert.addAction(openURLAction(title: "Terms of Use", urlString: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"))
         alert.addAction(openURLAction(title: "Privacy Policy", urlString: "https://github.com/waynecarter/simple-sync/blob/main/PRIVACY"))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            alert.dismiss(animated: true)
+        }))
         
         return alert
     }
