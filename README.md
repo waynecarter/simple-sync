@@ -128,7 +128,7 @@ The `App` class manages the overall synchronization of the application using Cou
 // and certificate authority for peer-to-peer trust verification.
 let app = App(
     database: database,
-    endpoint: Settings.shared.endpoint,
+    endpoint: endpoint,
     identity: identity,
     ca: ca
 )
