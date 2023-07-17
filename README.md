@@ -164,7 +164,7 @@ function(doc, oldDoc, meta) {
 #### Photo
 
 1. Create an App Endpoint named “photo”
-2. In the App Endpoint, create a user with the Admin Channel “photo”. The user should have the same username/password as the "color" App Endpoint.
+2. In the App Endpoint, create a user with the Admin Channel “photo”. The user should have the same username/password as the user created for the "color" App Endpoint.
 3. Define the Access Control and Data Validation function as:
 ```javascript
 function(doc, oldDoc, meta) {
@@ -178,7 +178,7 @@ function(doc, oldDoc, meta) {
 #### Count
 
 1. Create an App Endpoint named “count”
-2. In the App Endpoint, create a user with the Admin Channel “count”. The user should have the same username/password as the "color" App Endpoint.
+2. In the App Endpoint, create a user with the Admin Channel “count”. The user should have the same username/password as the user created for the "color" App Endpoint.
 3. Define the Access Control and Data Validation function as:
 ```javascript
 function(doc, oldDoc, meta) {
