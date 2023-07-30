@@ -153,7 +153,7 @@ extension CouchbaseLiteSwift.Database {
 // resolver provided by Couchbase Lite.
 //
 // The "pn-counter" field values have the following structure:
-// {
+// "count": {
 //    "type": "pn-counter",
 //    "value": 35,
 //    "p": {
@@ -188,8 +188,9 @@ class CRDTConflictResolver: ConflictResolverProtocol {
             return resolvedDoc
         }
         
-        // Iterate over all keys in the local document.
-        for key in localDocument.keys {
+        // Iterate over all keys in the local and remote documents.
+        let localAndRemoteKeys = Set(localDocument.keys).union(remoteDocument.keys)
+        for key in localAndRemoteKeys {
             // Check if either the local or remote document has a "pn-counter" type field for the current key.
             if localDocument[key].dictionary?["type"].string == "pn-counter" || remoteDocument[key].dictionary?["type"].string == "pn-counter" {
                 // Initialize counters for the positive (p) and negative (n) values.
