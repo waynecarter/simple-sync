@@ -59,11 +59,8 @@ class MutableCounter: Counter {
         // Increment the value for the actor.
         p[actor].int = p[actor].int + Int(amount)
         
-        // Set the new merged value.
-        counter["value"].int = mergedValue(
-            p: p,
-            n: counter["n"].dictionary
-        )
+        // Set the new value.
+        counter["value"].int = value(p: p, n: counter["n"].dictionary)
     }
 
     func decrement(by amount: UInt) {
@@ -84,14 +81,11 @@ class MutableCounter: Counter {
         // Decrement the value for the actor.
         n[actor].int = n[actor].int + Int(amount)
         
-        // Set the new merged value.
-        counter["value"].int = mergedValue(
-            p: counter["p"].dictionary,
-            n: n
-        )
+        // Set the new value.
+        counter["value"].int = value(p: counter["p"].dictionary, n: n)
     }
     
-    private func mergedValue(p: DictionaryObject?, n: DictionaryObject?) -> Int {
+    private func value(p: DictionaryObject?, n: DictionaryObject?) -> Int {
         // Sum the positive counter values.
         let pCounterValue = p?.toDictionary().values.reduce(0, { partialResult, value in
             if let value = value as? Int {
@@ -177,7 +171,7 @@ class CRDTConflictResolver: ConflictResolverProtocol {
     static let shared: CRDTConflictResolver = CRDTConflictResolver()
     
     func resolve(conflict: Conflict) -> Document? {
-        // Use the default conflict resolver for initial resolution
+        // Use the default conflict resolver for initial resolution.
         let defaultResolver = ConflictResolver.default
         guard let resolvedDoc = defaultResolver.resolve(conflict: conflict)?.toMutable() else {
             return nil
