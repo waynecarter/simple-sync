@@ -123,13 +123,12 @@ extension CouchbaseLiteSwift.ConflictResolver {
 
 extension CouchbaseLiteSwift.Database {
     var uuid: String {
-        if let uuid = UserDefaults.standard.string(forKey: "\(name).uuid") {
-            return uuid
-        } else {
+        guard let uuid = UserDefaults.standard.string(forKey: "\(name).uuid") else {
             let uuid = UUID().uuidString
             UserDefaults.standard.set(uuid, forKey: "\(name).uuid")
             return uuid
         }
+        return uuid
     }
 }
 
