@@ -57,7 +57,7 @@ class MutableCounter: Counter {
         }()
         
         // Increment the value for the actor.
-        p[actor].int = p[actor].int + Int(amount)
+        p[actor].int += Int(amount)
         
         // Set the new value.
         counter["value"].int = value(p: p, n: counter["n"].dictionary)
@@ -79,7 +79,7 @@ class MutableCounter: Counter {
         }()
         
         // Decrement the value for the actor.
-        n[actor].int = n[actor].int + Int(amount)
+        n[actor].int += Int(amount)
         
         // Set the new value.
         counter["value"].int = value(p: counter["p"].dictionary, n: n)
@@ -88,20 +88,14 @@ class MutableCounter: Counter {
     private func value(p: DictionaryObject?, n: DictionaryObject?) -> Int {
         // Sum the positive counter values.
         let pCounterValue = p?.toDictionary().values.reduce(0, { partialResult, value in
-            if let value = value as? Int {
-                return partialResult + value
-            } else {
-                return partialResult
-            }
+            guard let value = value as? Int else { return partialResult }
+            return partialResult + value
         }) ?? 0
         
         // Sum the negative counter values.
         let nCounterValue = n?.toDictionary().values.reduce(0, { partialResult, value in
-            if let value = value as? Int {
-                return partialResult + value
-            } else {
-                return partialResult
-            }
+            guard let value = value as? Int else { return partialResult }
+            return partialResult + value
         }) ?? 0
         
         // Return the difference between positive and negative counter values.
