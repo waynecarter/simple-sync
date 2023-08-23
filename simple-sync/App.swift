@@ -25,8 +25,8 @@ final class App {
         }
     }
     private let conflictResolver: ConflictResolverProtocol?
-    private let identity: SecIdentity
-    private let ca: SecCertificate
+    private let identity: SecIdentity?
+    private let ca: SecCertificate?
     
     private let uuid = UUID().uuidString
     private var listener: NWListener?
@@ -68,11 +68,11 @@ final class App {
         self.init(database: database, endpoint: endpoint, conflictResolver: nil, identity: identity, ca: ca)
     }
 
-    convenience init(database: CouchbaseLiteSwift.Database, endpoint: App.Endpoint?, conflictResolver: ConflictResolverProtocol?, identity: SecIdentity, ca: SecCertificate) {
+    convenience init(database: CouchbaseLiteSwift.Database, endpoint: App.Endpoint?, conflictResolver: ConflictResolverProtocol? = nil, identity: SecIdentity? = nil, ca: SecCertificate? = nil) {
         self.init(name: database.name, database: database, collections: [try! database.defaultCollection()], endpoint: endpoint, conflictResolver: conflictResolver, identity: identity, ca: ca)
     }
 
-    init(name: String, database: CouchbaseLiteSwift.Database, collections: [CouchbaseLiteSwift.Collection], endpoint: App.Endpoint?, conflictResolver: ConflictResolverProtocol?, identity: SecIdentity, ca: SecCertificate) {
+    init(name: String, database: CouchbaseLiteSwift.Database, collections: [CouchbaseLiteSwift.Collection], endpoint: App.Endpoint? = nil, conflictResolver: ConflictResolverProtocol? = nil, identity: SecIdentity? = nil, ca: SecCertificate? = nil) {
         self.name = name
         self.database = database
         self.collections = collections
@@ -181,11 +181,14 @@ final class App {
         if started, !running {
             running = true
             
-            // Create and start the listener and browser.
-            listener = createListener()
-            browser = createBrowser()
-            listener?.start(queue: networkQueue)
-            browser?.start(queue: networkQueue)
+            // If we have an identity and certificate authority defined, create and
+            // start the listener and browser for peer-to-peer connections.
+            if identity != nil, ca != nil {
+                listener = createListener()
+                browser = createBrowser()
+                listener?.start(queue: networkQueue)
+                browser?.start(queue: networkQueue)
+            }
             
             // Create and start the endpoint replicator.
             endpointReplicator = createEndpointReplicator()
@@ -257,13 +260,17 @@ final class App {
     // MARK: - Network setup
     
     private var networkParameters: NWParameters {
-        // Configure TLS options
+        // Start with TLS options.
         let tlsOptions = NWProtocolTLS.Options()
-        let identity = sec_identity_create(identity)!
-        sec_protocol_options_set_local_identity(tlsOptions.securityProtocolOptions, identity)
+        
+        // Configure the security protocol options.
+        if let identity = identity {
+            let identity = sec_identity_create(identity)!
+            sec_protocol_options_set_local_identity(tlsOptions.securityProtocolOptions, identity)
+        }
         sec_protocol_options_set_verify_block(tlsOptions.securityProtocolOptions, trustVerificationBlock, trustEvaluationQueue)
         
-        // Configure the NWParameters with TLS
+        // Configure the NWParameters with the options.
         let params = NWParameters(tls: tlsOptions)
         params.includePeerToPeer = true
         params.allowLocalEndpointReuse = true
