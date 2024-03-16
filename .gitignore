@@ -2,6 +2,7 @@
 
 # Ignore Couchbase Lite framework
 **/CouchbaseLiteSwift.xcframework
+**/CouchbaseLiteVectorSearch.xcframework
 
 # Ignore everything in the xcuserdata directory
 xcuserdata/
