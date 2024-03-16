@@ -26,9 +26,10 @@
 		B0CB05182A4BF83F001CD3A2 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB05172A4BF83F001CD3A2 /* ColorViewController.swift */; };
 		B0CB051A2A4BF8E4001CD3A2 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB05192A4BF8E4001CD3A2 /* Counter.swift */; };
 		B0D4BAD12A5A0723001A1A42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0D4BAD02A5A0723001A1A42 /* Assets.xcassets */; };
-		B0E3E8C42BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E3E8C32BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework */; };
-		B0E3E8C62BA64CCD002893F9 /* AI in Resources */ = {isa = PBXBuildFile; fileRef = B0E3E8C52BA64CCD002893F9 /* AI */; };
 		B0E3E8C82BA64CD5002893F9 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E3E8C72BA64CD5002893F9 /* ImagePickerController.swift */; };
+		B0E3E8CB2BA64D4C002893F9 /* Embeddings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E3E8CA2BA64D4C002893F9 /* Embeddings.swift */; };
+		B0E3E8CC2BA64D82002893F9 /* CouchbaseLiteVectorSearch.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E3E8C32BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework */; };
+		B0E3E8CD2BA64D82002893F9 /* CouchbaseLiteVectorSearch.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0E3E8C32BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B0F1C88B29FF89450022FC25 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F1C88A29FF89450022FC25 /* App.swift */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B0E3E8CD2BA64D82002893F9 /* CouchbaseLiteVectorSearch.xcframework in Embed Frameworks */,
 				B0712A1F2A57AC3E00F33C28 /* CouchbaseLiteSwift.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -68,8 +70,8 @@
 		B0CB05192A4BF8E4001CD3A2 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		B0D4BAD02A5A0723001A1A42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0E3E8C32BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteVectorSearch.xcframework; path = "simple-sync/Frameworks/CouchbaseLiteVectorSearch.xcframework"; sourceTree = "<group>"; };
-		B0E3E8C52BA64CCD002893F9 /* AI */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AI; sourceTree = "<group>"; };
 		B0E3E8C72BA64CD5002893F9 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
+		B0E3E8CA2BA64D4C002893F9 /* Embeddings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Embeddings.swift; sourceTree = "<group>"; };
 		B0F1C88A29FF89450022FC25 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0E3E8C42BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework in Frameworks */,
+				B0E3E8CC2BA64D82002893F9 /* CouchbaseLiteVectorSearch.xcframework in Frameworks */,
 				B0712A1E2A57AC3E00F33C28 /* CouchbaseLiteSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,7 +114,7 @@
 				B0B3A1FC2A59C87F002BD6BC /* SearchViewController.swift */,
 				B0CB05192A4BF8E4001CD3A2 /* Counter.swift */,
 				B0F1C88A29FF89450022FC25 /* App.swift */,
-				B0E3E8C52BA64CCD002893F9 /* AI */,
+				B0E3E8C92BA64D4C002893F9 /* AI */,
 				B00D638E29FDD6A400825DDB /* Credentials */,
 				B00D637229FD74FC00825DDB /* Main.storyboard */,
 				B00D637729FD74FF00825DDB /* LaunchScreen.storyboard */,
@@ -146,6 +148,14 @@
 				B00D63A729FDF78200825DDB /* client_identity.p12 */,
 			);
 			path = Credentials;
+			sourceTree = "<group>";
+		};
+		B0E3E8C92BA64D4C002893F9 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				B0E3E8CA2BA64D4C002893F9 /* Embeddings.swift */,
+			);
+			path = AI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,7 +217,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0E3E8C62BA64CCD002893F9 /* AI in Resources */,
 				B00D637929FD74FF00825DDB /* LaunchScreen.storyboard in Resources */,
 				B00D63A429FDEB0800825DDB /* ca_cert.der in Resources */,
 				B00D63A929FDF7F600825DDB /* client_identity.p12 in Resources */,
@@ -225,6 +234,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0CB051A2A4BF8E4001CD3A2 /* Counter.swift in Sources */,
+				B0E3E8CB2BA64D4C002893F9 /* Embeddings.swift in Sources */,
 				B0F1C88B29FF89450022FC25 /* App.swift in Sources */,
 				B09F7A3A2A00A45400022B9E /* Credentials.swift in Sources */,
 				B0CB05162A4BF82F001CD3A2 /* CountViewController.swift in Sources */,
@@ -396,7 +406,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -433,7 +443,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
