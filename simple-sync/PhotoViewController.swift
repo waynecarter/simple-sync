@@ -121,7 +121,7 @@ class PhotoViewController: UIViewController {
     // MARK: - Utility
 
     private class Photos {
-        private static let emojis: [String] = ["🦁","🦊","🐻‍❄️","🐱","🐶","🐰"]
+        private static let emojis: [String] = ["🍩","🍨","🧁","🍪","🍧","🍰"]
         
         static subscript(emoji: String) -> UIImage {
             return image(emoji)
