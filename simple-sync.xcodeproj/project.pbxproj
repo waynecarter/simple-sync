@@ -26,6 +26,9 @@
 		B0CB05182A4BF83F001CD3A2 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB05172A4BF83F001CD3A2 /* ColorViewController.swift */; };
 		B0CB051A2A4BF8E4001CD3A2 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB05192A4BF8E4001CD3A2 /* Counter.swift */; };
 		B0D4BAD12A5A0723001A1A42 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0D4BAD02A5A0723001A1A42 /* Assets.xcassets */; };
+		B0E3E8C42BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E3E8C32BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework */; };
+		B0E3E8C62BA64CCD002893F9 /* AI in Resources */ = {isa = PBXBuildFile; fileRef = B0E3E8C52BA64CCD002893F9 /* AI */; };
+		B0E3E8C82BA64CD5002893F9 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E3E8C72BA64CD5002893F9 /* ImagePickerController.swift */; };
 		B0F1C88B29FF89450022FC25 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F1C88A29FF89450022FC25 /* App.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,9 @@
 		B0CB05172A4BF83F001CD3A2 /* ColorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewController.swift; sourceTree = "<group>"; };
 		B0CB05192A4BF8E4001CD3A2 /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
 		B0D4BAD02A5A0723001A1A42 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B0E3E8C32BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CouchbaseLiteVectorSearch.xcframework; path = "simple-sync/Frameworks/CouchbaseLiteVectorSearch.xcframework"; sourceTree = "<group>"; };
+		B0E3E8C52BA64CCD002893F9 /* AI */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AI; sourceTree = "<group>"; };
+		B0E3E8C72BA64CD5002893F9 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		B0F1C88A29FF89450022FC25 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0E3E8C42BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework in Frameworks */,
 				B0712A1E2A57AC3E00F33C28 /* CouchbaseLiteSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,12 +112,14 @@
 				B0B3A1FC2A59C87F002BD6BC /* SearchViewController.swift */,
 				B0CB05192A4BF8E4001CD3A2 /* Counter.swift */,
 				B0F1C88A29FF89450022FC25 /* App.swift */,
+				B0E3E8C52BA64CCD002893F9 /* AI */,
 				B00D638E29FDD6A400825DDB /* Credentials */,
 				B00D637229FD74FC00825DDB /* Main.storyboard */,
 				B00D637729FD74FF00825DDB /* LaunchScreen.storyboard */,
 				B00D636C29FD74FC00825DDB /* AppDelegate.swift */,
 				B00D636E29FD74FC00825DDB /* SceneDelegate.swift */,
 				B022BC772A4E9C3900CA835A /* ViewController.swift */,
+				B0E3E8C72BA64CD5002893F9 /* ImagePickerController.swift */,
 				B0B3A1FA2A58799C002BD6BC /* Actions.swift */,
 				B022BC7C2A50B53C00CA835A /* Settings.swift */,
 				B022BC7E2A50C10400CA835A /* Settings.bundle */,
@@ -124,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				B0712A1D2A57AC3E00F33C28 /* CouchbaseLiteSwift.xcframework */,
+				B0E3E8C32BA64CC5002893F9 /* CouchbaseLiteVectorSearch.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -197,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0E3E8C62BA64CCD002893F9 /* AI in Resources */,
 				B00D637929FD74FF00825DDB /* LaunchScreen.storyboard in Resources */,
 				B00D63A429FDEB0800825DDB /* ca_cert.der in Resources */,
 				B00D63A929FDF7F600825DDB /* client_identity.p12 in Resources */,
@@ -218,6 +229,7 @@
 				B09F7A3A2A00A45400022B9E /* Credentials.swift in Sources */,
 				B0CB05162A4BF82F001CD3A2 /* CountViewController.swift in Sources */,
 				B022BC782A4E9C3900CA835A /* ViewController.swift in Sources */,
+				B0E3E8C82BA64CD5002893F9 /* ImagePickerController.swift in Sources */,
 				B00D636D29FD74FC00825DDB /* AppDelegate.swift in Sources */,
 				B0B3A1FB2A58799D002BD6BC /* Actions.swift in Sources */,
 				B0B3A1FD2A59C881002BD6BC /* SearchViewController.swift in Sources */,
