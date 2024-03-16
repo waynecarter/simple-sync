@@ -10,18 +10,33 @@ import CouchbaseLiteSwift
 
 // MARK: - Search View Controller
 
-class SearchViewController: CollectionViewController, UISearchResultsUpdating {
+class SearchViewController: CollectionViewController, UISearchResultsUpdating, UISearchBarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     private let database: CouchbaseLiteSwift.Database
     private let collection: CouchbaseLiteSwift.Collection
-    private let query: Query
-    private let queryWithSearch: Query
     
     required init?(coder: NSCoder) {
-        // Create the database and, if it is new, initialize it with the demo data.
-        database = try! CouchbaseLiteSwift.Database(name: "search")
-        collection = try! database.defaultCollection()
+        // Create the database.
+        var database = try! CouchbaseLiteSwift.Database(name: "search")
+        var collection = try! database.defaultCollection()
+        
+        // HACK: For existing databases that don't already have a vector index for the
+        // images, delete the database and recreate it so that the demo data will be
+        // reloaded and the vector index populated.
+        // TODO: Once the async index updater is available, use that instead.
+        if try! collection.indexes().contains("ImageVectorIndex") == false {
+            try! database.delete()
+            database = try! CouchbaseLiteSwift.Database(name: "search")
+            collection = try! database.defaultCollection()
+        }
+        
+        self.database = database
+        self.collection = collection
+
+        super.init(coder: coder)
+        
+        // If the database is empty, initialize it w/ the demo data.
         if collection.count == 0  {
-            Self.addDemoData(to: collection)
+            addDemoData(to: collection)
         }
 
         // Initialize the value index on the "name" field for fast sorting.
@@ -35,29 +50,13 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating {
         // Initialize the full-text search index on the "name", "color", and "category" fields.
         let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
         try! collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
-
-        // Initialize the default query.
-        query = try! database.createQuery("""
-            SELECT name, image
-            FROM _
-            WHERE type = 'product'
-                AND ($category IS MISSING OR category = $category OR ARRAY_CONTAINS(category, $category))
-            ORDER BY name
-        """)
-
-        // Initialize the query with search.
-        queryWithSearch = try! database.createQuery("""
-            SELECT name, image
-            FROM _
-            WHERE type = 'product'
-                AND ($category IS MISSING OR category = $category OR ARRAY_CONTAINS(category, $category))
-                AND MATCH(NameColorAndCategoryIndex, $search)
-            ORDER BY RANK(NameColorAndCategoryIndex), name
-        """)
-
-        super.init(coder: coder)
+        
+        // Initialize the vector index on the "embedding" field for image search.
+        var vectorIndex = VectorIndexConfiguration(expression: "embedding", dimensions: 768, centroids: 2)
+        vectorIndex.metric = .cosine
+        try! collection.createIndex(withName: "ImageVectorIndex", config: vectorIndex)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,29 +64,45 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating {
         searchController.searchResultsUpdater = self
         
         // Initialize the search bar.
-        searchController.searchBar.placeholder = "Tops, Bottoms, Shoes, and More"
-        searchController.searchBar.scopeButtonTitles = ["All", "Tops", "Bottoms", "Shoes"]
+        searchController.searchBar.placeholder = "Produce, Bakery, Dairy, and More"
+        searchController.searchBar.scopeButtonTitles = ["All", "Produce", "Bakery", "Dairy"]
+        
+        // Initialize the "camera" button on the search bar.
+        searchController.searchBar.setImage(UIImage(systemName: "camera"), for: .bookmark, state: .normal)
+        searchController.searchBar.showsBookmarkButton = true
+        searchController.searchBar.delegate = self
         
         // Load initial results.
-        search(nil, category: nil)
+        search(nil, category: nil, embedding: nil)
     }
     
     // MARK: - Search
     
-    private func search(_ searchString: String?, category: String?) {
-        // Get the default query.
-        var query = query
-        
-        // Create query parameters.
+    private func search(_ searchString: String?, category: String?, embedding: [NSNumber]?) {
+        var select = [String]()
+        var predicates = [String]()
+        var orderBy = [String]()
         let parameters = Parameters()
+        
+        // Add the primary predicates.
+        predicates.append("type = 'product'")
+        predicates.append("AND ($category IS MISSING OR category = $category OR ARRAY_CONTAINS(category, $category))")
+        
+        // If there is an embedding, add the vector search components.
+        if let embedding = embedding {
+            select.append("VECTOR_DISTANCE(ImageVectorIndex) AS distance")
+            predicates.append("AND VECTOR_MATCH(ImageVectorIndex, $embedding, 10)")
+            predicates.append("AND VECTOR_DISTANCE(ImageVectorIndex) < 0.35")
+            orderBy.append("VECTOR_DISTANCE(ImageVectorIndex)")
+            parameters.setArray(MutableArrayObject(data: embedding), forName: "embedding")
+        }
 
-        // If there is a search value, use the query with search and add the
-        // search parameter.
+        // If there is an embedding, add the full-text search components.
         if var searchString = searchString?.uppercased(), !searchString.isEmpty {
-            query = queryWithSearch
-            if !searchString.hasSuffix("*") {
-                searchString = searchString.appending("*")
-            }
+            searchString = !searchString.hasSuffix("*") ? searchString.appending("*") : searchString
+            
+            predicates.append("AND MATCH(NameColorAndCategoryIndex, $search)")
+            orderBy.append("RANK(NameColorAndCategoryIndex)")
             parameters.setString(searchString, forName: "search")
         }
 
@@ -95,10 +110,23 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating {
         if let selectedCategory = category, selectedCategory != "All" {
             parameters.setString(selectedCategory, forName: "category")
         }
-
-        // Set the query parameters.
+        
+        // Set the defaults.
+        select.insert(contentsOf: ["name","image"], at: 0)
+        orderBy.append("name")
+        
+        // Expand the query string.
+        let queryString = """
+            SELECT \(select.joined(separator: ","))
+            FROM _
+            WHERE \(predicates.joined(separator: "\n"))
+            ORDER BY \(orderBy.joined(separator: ","))
+        """
+        
+        // Create the query.
+        let query = try! database.createQuery(queryString)
         query.parameters = parameters
-
+        
         do {
             // Execute the query and get the results.
             let results = try query.execute()
@@ -110,8 +138,42 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating {
                    let imageData = result["image"].blob?.content,
                    let image = UIImage(data: imageData)
                 {
-                    let searchResult = SearchResult(name: name, image: image)
+                    let distance = result["distance"].number
+                    let searchResult = SearchResult(name: name, image: image, distance: distance)
                     searchResults.append(searchResult)
+                }
+            }
+            
+            // If an embedding was provided then the query has a vector search
+            // and a distance output. For these queries, post process and filter
+            // any matches that are too far away from the closest match.
+            //
+            // NOTE: When Couchbase Lite supports window functions the query can
+            // be change to something like the following and won't require post
+            // processing:
+            // WITH RankedResults AS (
+            //     SELECT name, image, VECTOR_DISTANCE(ImageVectorIndex) AS distance,
+            //            MIN(VECTOR_DISTANCE(ImageVectorIndex)) OVER () AS min_distance
+            //     FROM _
+            //     WHERE type = 'product'
+            //     AND ($category IS MISSING OR category = $category OR ARRAY_CONTAINS(category, $category))
+            //     AND VECTOR_MATCH(ImageVectorIndex, $embedding, 10)
+            //     AND VECTOR_DISTANCE(ImageVectorIndex) < 0.45
+            // )
+            // SELECT name, image, distance
+            // FROM RankedResults
+            // WHERE distance <= min_distance * 1.40
+            // ORDER BY distance, name
+            if embedding != nil {
+                // Get the minimum distance
+                let minimumDistance: Double = {
+                    let minimumResult = searchResults.min { a, b in a.distance < b.distance }
+                    return minimumResult?.distance ?? .greatestFiniteMagnitude
+                }()
+                
+                // Filter results that are too far away from the closest match.
+                searchResults = searchResults.filter { searchResult in
+                    searchResult.distance <= minimumDistance * 1.40
                 }
             }
             
@@ -125,6 +187,64 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating {
         }
     }
     
+    var searchString: String? {
+        return searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    private var searchEmbedding: [NSNumber]?
+    
+    var searchCategory: String? {
+        searchController.searchBar.scopeButtonTitles?[searchController.searchBar.selectedScopeButtonIndex]
+    }
+    
+    func setSelectedImage(_ image: UIImage?, with embedding: [NSNumber]) {
+        if let image = image {
+            // Update the search UI.
+            let bookmarkImage = self.searchController.searchBar.image(for: .bookmark, state: .normal)
+            let bookmarkImageSize = bookmarkImage?.size ?? CGSize(width: 22, height: 22)
+            let camaraImageSize = max(bookmarkImageSize.width, bookmarkImageSize.height)
+            let cameraImage = image.zoomed(to: CGSize(width: camaraImageSize, height: camaraImageSize), cornerRadius: 0.25 * camaraImageSize)
+            self.searchController.searchBar.setImage(cameraImage, for: .bookmark, state: .normal)
+            
+            // Update the search results.
+            self.searchEmbedding = embedding
+            self.search(self.searchString, category: self.searchCategory, embedding: self.searchEmbedding)
+        } else {
+            // Clear the search embedding.
+            searchController.searchBar.setImage(UIImage(systemName: "camera"), for: .bookmark, state: .normal)
+            searchEmbedding = nil
+            
+            search(searchString, category: searchCategory, embedding: searchEmbedding)
+        }
+    }
+    
+    func setSelectedImage(_ image: UIImage?) {
+        if let image = image {
+            // Generate the embedding for the selected image.
+            embedding(for: image) { embedding in
+                // Update the UI on the main thread.
+                DispatchQueue.main.async {
+                    // Update the search UI.
+                    let bookmarkImage = self.searchController.searchBar.image(for: .bookmark, state: .normal)
+                    let bookmarkImageSize = bookmarkImage?.size ?? CGSize(width: 22, height: 22)
+                    let camaraImageSize = max(bookmarkImageSize.width, bookmarkImageSize.height)
+                    let cameraImage = image.zoomed(to: CGSize(width: camaraImageSize, height: camaraImageSize), cornerRadius: 0.25 * camaraImageSize)
+                    self.searchController.searchBar.setImage(cameraImage, for: .bookmark, state: .normal)
+                    
+                    // Update the search results.
+                    self.searchEmbedding = embedding
+                    self.search(self.searchString, category: self.searchCategory, embedding: self.searchEmbedding)
+                }
+            }
+        } else {
+            // Clear the search embedding.
+            searchController.searchBar.setImage(UIImage(systemName: "camera"), for: .bookmark, state: .normal)
+            searchEmbedding = nil
+            
+            search(searchString, category: searchCategory, embedding: searchEmbedding)
+        }
+    }
+    
     private var searchResults = [SearchResult]() {
         didSet {
             // When the search results change, reload the collection view's data.
@@ -135,15 +255,85 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating {
     private struct SearchResult {
         let name: String
         let image: UIImage
+        let distance: Double
+        
+        init(name: String, image: UIImage, distance: NSNumber?) {
+            self.name = name
+            self.image = image
+            self.distance = distance?.doubleValue ?? .greatestFiniteMagnitude
+        }
+    }
+    
+    // MARK: - UISearchBarDelegate
+    
+    func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
+        presentImagePicker(for: searchBar)
+    }
+    
+    func presentImagePicker(for searchBar: UISearchBar) {
+        let actionSheet = UIAlertController(title: "Select a photo to search for similar items.", message: nil, preferredStyle: .actionSheet)
+        
+        // For iPads set the source view as required.
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            actionSheet.popoverPresentationController?.sourceView = searchBar
+        }
+        
+        func presentImagePicker(sourceType: UIImagePickerController.SourceType) {
+            if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = sourceType
+                imagePicker.allowsEditing = false
+                self.present(imagePicker, animated: true, completion: nil)
+            }
+        }
+        
+        // Option to choose photo from examples
+        actionSheet.addAction(UIAlertAction(title: "Choose from Examples", style: .default, handler: { _ in
+            let imagePicker = ImagePickerController()
+            imagePicker.imageSelected = { [weak self] image in
+                self?.setSelectedImage(image)
+            }
+            self.present(imagePicker, animated: true, completion: nil)
+        }))
+        
+        // Check if the device has a camera
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { _ in
+                presentImagePicker(sourceType: .camera)
+            }))
+        }
+        
+        // Option to choose photo from library
+        actionSheet.addAction(UIAlertAction(title: "Choose from Library", style: .default, handler: { _ in
+            presentImagePicker(sourceType: .photoLibrary)
+        }))
+        
+        // If we have a search image, add an action for clearing it.
+        if searchEmbedding != nil {
+            actionSheet.addAction(UIAlertAction(title: "Clear Image", style: .default, handler: { _ in
+                self.setSelectedImage(nil)
+            }))
+        }
+        
+        // Cancel action
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // Present the action sheet to the user
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // Clear the selected category and image.
+        searchController.searchBar.selectedScopeButtonIndex = 0
+        setSelectedImage(nil)
     }
     
     // MARK: - UISearchResultsUpdating
     
     func updateSearchResults(for searchController: UISearchController) {
-        // As the user types, update the search results.
-        let searchString = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        let selectedCategory = searchController.searchBar.scopeButtonTitles?[searchController.searchBar.selectedScopeButtonIndex]
-        search(searchString, category: selectedCategory)
+        // As the user types or clears the search, update the search results.
+        search(searchString, category: searchCategory, embedding: searchEmbedding)
     }
     
     // MARK: - UICollectionViewDataSource
@@ -162,28 +352,70 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating {
         return cell
     }
     
+    // MARK: - UIImagePickerControllerDelegate
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let image = info[.originalImage] as? UIImage {
+            setSelectedImage(image)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
     // MARK: - Util
     
-    private static func addDemoData(to collection: CouchbaseLiteSwift.Collection) {
+    private func addDemoData(to collection: CouchbaseLiteSwift.Collection) {
         let demoData: [[String : Any]] = [
-            ["type":"product","name":"Polo","image":"👕","color":"blue","category":"Tops"],
-            ["type":"product","name":"Jeans","image":"👖","color":"blue","category":"Bottoms"],
-            ["type":"product","name":"Blouse","image":"👚","color":"pink","category":"Tops"],
-            ["type":"product","name":"Dress","image":"👗","color":["green", "red"],"category":["Tops", "Bottoms"]],
-            ["type":"product","name":"Shorts","image":"🩳","color":["orange", "white", "red"],"category":"Bottoms"],
-            ["type":"product","name":"Socks","image":"🧦","color":["brown", "red"]],
-            ["type":"product","name":"Hat","image":"🧢","color":"blue"],
-            ["type":"product","name":"Scarf","image":"🧣","color":"red"],
-            ["type":"product","name":"Gloves","image":"🧤","color":"green"],
-            ["type":"product","name":"Coat","image":"🧥","color":"brown","category":"Tops"],
-            ["type":"product","name":"Shirt","image":"👔","color":["blue", "yellow"],"category":"Tops"],
-            ["type":"product","name":"Trainer","image":"👟","color":["gray", "white"],"category":"Shoes"],
-            ["type":"product","name":"Flat","image":"🥿","color":"blue","category":"Shoes"],
-            ["type":"product","name":"Hiking Boot","image":"🥾","color":["orange", "brown", "green"],"category":"Shoes"],
-            ["type":"product","name":"Loafer","image":"👞","color":"brown","category":"Shoes"],
-            ["type":"product","name":"Boot","image":"👢","color":"brown","category":"Shoes"],
-            ["type":"product","name":"Sandal","image":"👡","color":"brown","category":"Shoes"],
-            ["type":"product","name":"Flip Flop","image":"🩴","color":["green", "blue"],"category":"Shoes"]
+            // Vegetables
+            ["type":"product","name":"Hot Pepper","image":"🌶️","color":"red","category":"Produce"],
+            ["type":"product","name":"Carrot","image":"🥕","color":"orange","category":"Produce"],
+            ["type":"product","name":"Lettuce","image":"🥬","color":"green","category":"Produce"],
+            ["type":"product","name":"Broccoli","image":"🥦","color":"green","category":"Produce"],
+            ["type":"product","name":"Cucumber","image":"🥒","color":"green","category":"Produce"],
+            ["type":"product","name":"Salad","image":"🥗","color":"green","category":"Produce"],
+            ["type":"product","name":"Corn","image":"🌽","color":"yellow","category":"Produce"],
+            ["type":"product","name":"Potato","image":"🥔","color":"brown","category":"Produce"],
+            ["type":"product","name":"Garlic","image":"🧄","color":"brown","category":"Produce"],
+            ["type":"product","name":"Onion","image":"🧅","color":"brown","category":"Produce"],
+            ["type":"product","name":"Tomato","image":"🍅","color":"red","category":"Produce"],
+            ["type":"product","name":"Bell Pepper","image":"🫑","color":"green","category":"Produce"],
+            // Fruit
+            ["type":"product","name":"Cherries","image":"🍒","color":"red","category":"Produce"],
+            ["type":"product","name":"Strawberry","image":"🍓","color":"red","category":"Produce"],
+            ["type":"product","name":"Grapes","image":"🍇","color":"purple","category":"Produce"],
+            ["type":"product","name":"Red Apple","image":"🍎","color":"red","category":"Produce"],
+            ["type":"product","name":"Watermelon","image":"🍉","color":["red","green"],"category":"Produce"],
+            ["type":"product","name":"Tangerine","image":"🍊","color":"orange","category":"Produce"],
+            ["type":"product","name":"Lemon","image":"🍋","color":"yellow","category":"Produce"],
+            ["type":"product","name":"Pineapple","image":"🍍","color":"yellow","category":"Produce"],
+            ["type":"product","name":"Banana","image":"🍌","color":"yellow","category":"Produce"],
+            ["type":"product","name":"Avocado","image":"🥑","color":["green","yellow"],"category":"Produce"],
+            ["type":"product","name":"Green Apple","image":"🍏","color":"green","category":"Produce"],
+            ["type":"product","name":"Melon","image":"🍈","color":["green","yellow"],"category":"Produce"],
+            ["type":"product","name":"Pear","image":"🍐","color":"green","category":"Produce"],
+            ["type":"product","name":"Kiwi","image":"🥝","color":"green","category":"Produce"],
+            ["type":"product","name":"Mango","image":"🥭","color":["red","yellow","green"],"category":"Produce"],
+            ["type":"product","name":"Coconut","image":"🥥","color":["brown","white"],"category":"Produce"],
+            ["type":"product","name":"Blueberries","image":"🫐","color":"blue","category":"Produce"],
+            ["type":"product","name":"Ginger Root","image":"🫚","color":"brown","category":"Produce"],
+            // Bakery
+            ["type":"product","name":"Cake","image":"🍰","color":["yellow","white"],"category":"Bakery"],
+            ["type":"product","name":"Cookie","image":"🍪","color":"brown","category":"Bakery"],
+            ["type":"product","name":"Doughnut","image":"🍩","color":"brown","category":"Bakery"],
+            ["type":"product","name":"Cupcake","image":"🧁","color":["yellow","white"],"category":"Bakery"],
+            ["type":"product","name":"Bagel","image":"🥯","color":"brown","category":"Bakery"],
+            ["type":"product","name":"Bread","image":"🍞","color":"brown","category":"Bakery"],
+            ["type":"product","name":"Baguette","image":"🥖","color":"brown","category":"Bakery"],
+            ["type":"product","name":"Pretzel","image":"🥨","color":"brown","category":"Bakery"],
+            ["type":"product","name":"Croissant","image":"🥐","color":"brown","category":"Bakery"],
+            // Dairy
+            ["type":"product","name":"Cheese","image":"🧀","color":"yellow","category":"Dairy"],
+            ["type":"product","name":"Butter","image":"🧈","color":"yellow","category":"Dairy"],
+            ["type":"product","name":"Ice Cream","image":"🍨","color":["white","brown"],"category":"Dairy"]
         ]
         
         func image(fromString string: String) -> UIImage? {
@@ -201,16 +433,29 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating {
         }
         
         for (_, data) in demoData.enumerated() {
+            // Add document with a generated image from it's image string.
             let document = MutableDocument(data: data)
+            var theImage: UIImage? = nil
             if let imageString = document["image"].string {
-                let image = image(fromString: imageString)
-                // Convert image to pngData
-                if let pngData = image?.pngData() {
+                theImage = image(fromString: imageString)
+                if let pngData = theImage?.pngData() {
                     document["image"].blob = Blob(contentType: "image/png", data: pngData)
                 }
             }
             try! collection.save(document: document)
+            
+            // Generate an embedding for the image and update the document.
+            embedding(for: theImage) { embedding in
+                if let embedding = embedding {
+                    document["embedding"].array = MutableArrayObject(data: embedding)
+                    try! collection.save(document: document)
+                }
+            }
         }
+    }
+    
+    private func embedding(for image: UIImage?, completion: @escaping ([NSNumber]?) -> Void) {
+        Embeddings.foregroundFeatureEmbedding(from: image, fitTo: CGSize(width: 100, height: 100), completion: completion)
     }
 }
 
@@ -294,7 +539,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     
     // MARK: - UICollectionViewDelegateFlowLayout
     
-    private let itemPadding: CGFloat = 15
+    private let itemPadding: CGFloat = 20
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let numberOfItemsPerRow: CGFloat = {
@@ -328,7 +573,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     @IBAction func infoButtonPressed(_ sender: UIBarButtonItem) {
         let alert = Actions.info
         alert.popoverPresentationController?.sourceItem = sender
-        alert.title = "Search using name, color, category, and more"
+        alert.title = "Search using name, color, category, image, and more"
         present(alert, animated: true)
     }
     
@@ -336,5 +581,39 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         let activity = Actions.share(for: self)
         activity.popoverPresentationController?.sourceItem = sender
         present(activity, animated: true)
+    }
+}
+
+private extension UIImage {
+    func zoomed(to targetSize: CGSize, cornerRadius: CGFloat = 0) -> UIImage? {
+        // Scale the image to fill the target size.
+        let widthRatio = targetSize.width / self.size.width
+        let heightRatio = targetSize.height / self.size.height
+        let scaleFactor = max(widthRatio, heightRatio)
+        let scaledWidth = self.size.width * scaleFactor
+        let scaledHeight = self.size.height * scaleFactor
+        let offsetX = (targetSize.width - scaledWidth) / 2.0 // Center horizontally
+        let offsetY = (targetSize.height - scaledHeight) / 2.0 // Center vertically
+        let scaledRect = CGRect(x: offsetX, y: offsetY, width: scaledWidth, height: scaledHeight)
+
+        let rendererFormat = UIGraphicsImageRendererFormat()
+        rendererFormat.scale = self.scale
+        rendererFormat.opaque = false
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize, format: rendererFormat)
+        let centeredAndRoundedImage = renderer.image { context in
+            UIColor.clear.setFill()
+            context.cgContext.fill(CGRect(origin: .zero, size: targetSize))
+
+            if cornerRadius > 0 {
+                context.cgContext.beginPath()
+                let path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: targetSize.width, height: targetSize.height), cornerRadius: cornerRadius)
+                path.addClip()
+            }
+
+            self.draw(in: scaledRect)
+        }
+
+        return centeredAndRoundedImage
     }
 }
