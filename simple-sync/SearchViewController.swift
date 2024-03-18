@@ -46,15 +46,15 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
         // Initialize the value index on the "category" field for fast predicates.
         let categoryIndex = ValueIndexConfiguration(["category"])
         try! collection.createIndex(withName: "CategoryIndex", config: categoryIndex)
-
-        // Initialize the full-text search index on the "name", "color", and "category" fields.
-        let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
-        try! collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
         
         // Initialize the vector index on the "embedding" field for image search.
         var vectorIndex = VectorIndexConfiguration(expression: "embedding", dimensions: 768, centroids: 2)
         vectorIndex.metric = .cosine
         try! collection.createIndex(withName: "ImageVectorIndex", config: vectorIndex)
+
+        // Initialize the full-text search index on the "name", "color", and "category" fields.
+        let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
+        try! collection.createIndex(withName: "NameColorAndCategoryIndex", config: ftsIndex)
     }
 
     override func viewDidLoad() {
