@@ -111,7 +111,7 @@ class CountViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func infoButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = Actions.info
+        let alert = Actions.info(for: "count-sync")
         alert.popoverPresentationController?.sourceItem = sender
         alert.title = "Tap the buttons, change the count, and sync with devices around you"
         present(alert, animated: true)

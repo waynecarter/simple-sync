@@ -152,7 +152,7 @@ class PhotoViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func infoButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = Actions.info
+        let alert = Actions.info(for: "photo-sync")
         alert.popoverPresentationController?.sourceItem = sender
         alert.title = "Tap the screen, change the photo, and sync with devices around you"
         present(alert, animated: true)

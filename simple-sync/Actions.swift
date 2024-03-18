@@ -9,9 +9,10 @@ import UIKit
 
 class Actions {
     
-    static var info: UIAlertController {
+    static func info(for demo: String) -> UIAlertController {
+        let exploreCodeUrl = "https://github.com/waynecarter/simple-sync/blob/main/README.md#\(demo)"
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(openURLAction(title: "Explore the Code", urlString: "https://github.com/waynecarter/simple-sync/"))
+        alert.addAction(openURLAction(title: "Explore the Code", urlString: exploreCodeUrl))
         alert.addAction(openURLAction(title: "Settings", urlString: UIApplication.openSettingsURLString))
         alert.addAction(openURLAction(title: "Terms of Use", urlString: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"))
         alert.addAction(openURLAction(title: "Privacy Policy", urlString: "https://github.com/waynecarter/simple-sync/blob/main/PRIVACY"))

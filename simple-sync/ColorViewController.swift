@@ -137,7 +137,7 @@ class ColorViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func infoButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = Actions.info
+        let alert = Actions.info(for: "color-sync")
         alert.popoverPresentationController?.sourceItem = sender
         alert.title = "Tap the screen, change the color, and sync with devices around you"
         present(alert, animated: true)

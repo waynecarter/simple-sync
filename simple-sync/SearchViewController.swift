@@ -311,7 +311,7 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
         
         // If we have a search image, add an action for clearing it.
         if searchEmbedding != nil {
-            actionSheet.addAction(UIAlertAction(title: "Clear Image", style: .default, handler: { _ in
+            actionSheet.addAction(UIAlertAction(title: "Clear Image", style: .destructive, handler: { _ in
                 self.setSelectedImage(nil)
             }))
         }
@@ -571,7 +571,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     // MARK: - Actions
     
     @IBAction func infoButtonPressed(_ sender: UIBarButtonItem) {
-        let alert = Actions.info
+        let alert = Actions.info(for: "search")
         alert.popoverPresentationController?.sourceItem = sender
         alert.title = "Search using name, color, category, image, and more"
         present(alert, animated: true)
