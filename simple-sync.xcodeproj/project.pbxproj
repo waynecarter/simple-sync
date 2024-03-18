@@ -22,6 +22,7 @@
 		B09F7A3A2A00A45400022B9E /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = B09F7A392A00A45400022B9E /* Credentials.swift */; };
 		B0B3A1FB2A58799D002BD6BC /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B3A1FA2A58799C002BD6BC /* Actions.swift */; };
 		B0B3A1FD2A59C881002BD6BC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0B3A1FC2A59C87F002BD6BC /* SearchViewController.swift */; };
+		B0BFFC632BA7E88A000F073B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B0C3B0A42BA7E4E8007DBD14 /* PrivacyInfo.xcprivacy */; };
 		B0CB05162A4BF82F001CD3A2 /* CountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB05152A4BF82F001CD3A2 /* CountViewController.swift */; };
 		B0CB05182A4BF83F001CD3A2 /* ColorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB05172A4BF83F001CD3A2 /* ColorViewController.swift */; };
 		B0CB051A2A4BF8E4001CD3A2 /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CB05192A4BF8E4001CD3A2 /* Counter.swift */; };
@@ -220,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B00D637929FD74FF00825DDB /* LaunchScreen.storyboard in Resources */,
+				B0BFFC632BA7E88A000F073B /* PrivacyInfo.xcprivacy in Resources */,
 				B00D63A429FDEB0800825DDB /* ca_cert.der in Resources */,
 				B00D63A929FDF7F600825DDB /* client_identity.p12 in Resources */,
 				B022BC7F2A50C10400CA835A /* Settings.bundle in Resources */,
@@ -394,7 +396,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = FMV3C84SQX;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -431,7 +433,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = FMV3C84SQX;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
