@@ -77,15 +77,18 @@ try collection.save(document: item, concurrencyControl: .failOnConflict)
 
 ### Search
 
-The `SearchViewController` class manages the search feature. It demonstrates how to use Couchbase Lite’s SQL, full-text search, and indexing capabilities.
+The `SearchViewController` class manages the search feature. It demonstrates how to use Couchbase Lite’s SQL, full-text search, vector search, and indexing capabilities.
 
 #### SQL
 
 ```sql
 SELECT name, image
 FROM products
-WHERE category = $category AND MATCH(NameColorAndCategoryIndex, $search)
-ORDER BY RANK(NameColorAndCategoryIndex), name
+WHERE category = $category
+  AND VECTOR_MATCH(ImageVectorIndex, $embedding, 10)
+  AND VECTOR_DISTANCE(ImageVectorIndex) < 0.35
+  AND MATCH(NameColorAndCategoryIndex, $search)
+ORDER BY VECTOR_DISTANCE(ImageVectorIndex), RANK(NameColorAndCategoryIndex), name
 ```
 
 #### Query
@@ -96,6 +99,7 @@ let query = try database.createQuery(sql)
 
 // Set the query parameters.
 query.parameters = Parameters()
+    .setString(embedding, forName: "embedding")
     .setString(search, forName: "search")
     .setString(category, forName: "category")
 
@@ -113,6 +117,10 @@ try collection.createIndex(withName: "NameIndex", config: nameIndex)
 // For fast predicates, create an index on the "category" field.
 let categoryIndex = ValueIndexConfiguration(["category"])
 try collection.createIndex(withName: "CategoryIndex", config: categoryIndex)
+        
+// Initialize the vector index on the "embedding" field for image search.
+var vectorIndex = VectorIndexConfiguration(expression: "embedding", dimensions: 768, centroids: 1000)
+try collection.createIndex(withName: "ImageVectorIndex", config: vectorIndex)
 
 // For fast searches, create a full-text search index on the "name", "color", and "category" fields.
 let ftsIndex = FullTextIndexConfiguration(["name", "color", "category"])
