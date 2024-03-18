@@ -99,9 +99,9 @@ let query = try database.createQuery(sql)
 
 // Set the query parameters.
 query.parameters = Parameters()
+    .setString(category, forName: "category")
     .setString(embedding, forName: "embedding")
     .setString(search, forName: "search")
-    .setString(category, forName: "category")
 
 // Execute the query.
 let results = try query.execute()
