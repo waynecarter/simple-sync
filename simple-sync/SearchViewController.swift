@@ -418,7 +418,7 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
             ["type":"product","name":"Ice Cream","image":"🍨","color":["white","brown"],"category":"Dairy"]
         ]
         
-        func image(fromString string: String) -> UIImage? {
+        func imageFromString(_ string: String) -> UIImage? {
             let nsString = string as NSString
             let font = UIFont.systemFont(ofSize: 160)
             let stringAttributes = [NSAttributedString.Key.font: font]
@@ -435,17 +435,17 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
         for (_, data) in demoData.enumerated() {
             // Add document with a generated image from it's image string.
             let document = MutableDocument(data: data)
-            var theImage: UIImage? = nil
+            var image: UIImage? = nil
             if let imageString = document["image"].string {
-                theImage = image(fromString: imageString)
-                if let pngData = theImage?.pngData() {
+                image = imageFromString(imageString)
+                if let pngData = image?.pngData() {
                     document["image"].blob = Blob(contentType: "image/png", data: pngData)
                 }
             }
             try! collection.save(document: document)
             
             // Generate an embedding for the image and update the document.
-            embedding(for: theImage) { embedding in
+            embedding(for: image) { embedding in
                 if let embedding = embedding {
                     document["embedding"].array = MutableArrayObject(data: embedding)
                     try! collection.save(document: document)
