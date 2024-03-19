@@ -10,7 +10,7 @@ import UIKit
 class ImagePickerController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     var collectionView: UICollectionView!
     let closeButton = UIButton(type: UIButton.ButtonType.close)
-    let images = ["bell-pepper", "blueberries", "carrots", "cherries-and-apples", "chocolate-chip-cookies", "doughnut"]
+    let images = ["bell-pepper", "carrots", "cherries", "blueberries", "chocolate-chip-cookies", "doughnut"]
     var imageSelected: ((_ image: UIImage) -> Void)?
     
     override func viewDidLoad() {
@@ -54,17 +54,17 @@ class ImagePickerController: UIViewController, UICollectionViewDelegate, UIColle
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         view.addSubview(collectionView)
         
-        // Set up constraints
+        // Set up the layout constraints
         NSLayoutConstraint.activate([
-            // Close button constraints
-            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
-            closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
+            // Close button
+            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
+            closeButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -15),
             
-            // Collection view constraints
-            collectionView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 12),
+            // Collection view
+            collectionView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 15),
             collectionView.leftAnchor.constraint(equalTo: view.leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: view.rightAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -82,15 +82,8 @@ class ImagePickerController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        
-        // Configure cell
-        cell.backgroundColor = .gray // Placeholder styling, adjust as needed
-        let imageView = UIImageView(image: UIImage(named: images[indexPath.row]))
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.frame = cell.contentView.bounds
-        cell.contentView.addSubview(imageView)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! ImageCollectionViewCell
+        cell.imageView.image = UIImage(named: images[indexPath.row])
         
         return cell
     }
@@ -114,6 +107,32 @@ class ImagePickerController: UIViewController, UICollectionViewDelegate, UIColle
         if let image = UIImage(named: imageName) {
             imageSelected?(image)
             dismiss(animated: true)
+        }
+    }
+    
+    private class ImageCollectionViewCell: UICollectionViewCell {
+        let imageView = UIImageView(frame: .zero)
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            backgroundColor = .black
+            
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            contentView.addSubview(imageView)
+            
+            NSLayoutConstraint.activate([
+                imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+                imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+                imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor)
+            ])
+        }
+        
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
         }
     }
 }
