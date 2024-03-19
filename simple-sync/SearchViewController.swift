@@ -138,7 +138,7 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
                    let imageData = result["image"].blob?.content,
                    let image = UIImage(data: imageData)
                 {
-                    let distance = result["distance"].number
+                    let distance = result["distance"].number?.doubleValue ?? .greatestFiniteMagnitude
                     let searchResult = SearchResult(name: name, image: image, distance: distance)
                     searchResults.append(searchResult)
                 }
@@ -147,23 +147,6 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
             // If an embedding was provided then the query has a vector search
             // and a distance output. For these queries, post process and filter
             // any matches that are too far away from the closest match.
-            //
-            // NOTE: When Couchbase Lite supports window functions the query can
-            // be change to something like the following and won't require post
-            // processing:
-            // WITH RankedResults AS (
-            //     SELECT name, image, VECTOR_DISTANCE(ImageVectorIndex) AS distance,
-            //            MIN(VECTOR_DISTANCE(ImageVectorIndex)) OVER () AS min_distance
-            //     FROM _
-            //     WHERE type = 'product'
-            //     AND ($category IS MISSING OR category = $category OR ARRAY_CONTAINS(category, $category))
-            //     AND VECTOR_MATCH(ImageVectorIndex, $embedding, 10)
-            //     AND VECTOR_DISTANCE(ImageVectorIndex) < 0.45
-            // )
-            // SELECT name, image, distance
-            // FROM RankedResults
-            // WHERE distance <= min_distance * 1.40
-            // ORDER BY distance, name
             if embedding != nil {
                 // Get the minimum distance
                 let minimumDistance: Double = {
@@ -257,10 +240,10 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
         let image: UIImage
         let distance: Double
         
-        init(name: String, image: UIImage, distance: NSNumber?) {
+        init(name: String, image: UIImage, distance: Double) {
             self.name = name
             self.image = image
-            self.distance = distance?.doubleValue ?? .greatestFiniteMagnitude
+            self.distance = distance
         }
     }
     
