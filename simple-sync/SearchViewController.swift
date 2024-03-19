@@ -8,8 +8,6 @@
 import UIKit
 import CouchbaseLiteSwift
 
-// MARK: - Search View Controller
-
 class SearchViewController: CollectionViewController, UISearchResultsUpdating, UISearchBarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     private let database: CouchbaseLiteSwift.Database
     private let collection: CouchbaseLiteSwift.Collection
