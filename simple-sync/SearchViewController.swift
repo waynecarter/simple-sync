@@ -84,7 +84,12 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
         
         // Add the primary predicates.
         predicates.append("type = 'product'")
-        predicates.append("AND ($category IS MISSING OR category = $category OR ARRAY_CONTAINS(category, $category))")
+        
+        // If there is a selected category, add the category predicate and parameter.
+        if let category = category, category != "All" {
+            predicates.append("AND category = $category")
+            parameters.setString(category, forName: "category")
+        }
         
         // If there is an embedding, add the vector search components.
         if let embedding = embedding {
@@ -102,11 +107,6 @@ class SearchViewController: CollectionViewController, UISearchResultsUpdating, U
             predicates.append("AND MATCH(NameColorAndCategoryIndex, $search)")
             orderBy.append("RANK(NameColorAndCategoryIndex)")
             parameters.setString(searchString, forName: "search")
-        }
-
-        // If there is a selected category, add the category parameter.
-        if let selectedCategory = category, selectedCategory != "All" {
-            parameters.setString(selectedCategory, forName: "category")
         }
         
         // Set the defaults.
