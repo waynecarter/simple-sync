@@ -5,7 +5,9 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>We need to access your local network to find and connect to other devices for peer-to-peer sync.</string>
+	<string>To find and connect with other devices on your local network for peer-to-peer sync, we need access to your local network. This enables syncing data directly between devices without needing an internet connection.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>To enable you to take photos and search for similar items, we need access to your camera.</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_color._tcp</string>
