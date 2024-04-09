@@ -200,13 +200,13 @@ function(doc, oldDoc, meta) {
 ## Run the Project
 
 1. Clone or download this repository
-2. Download the latest [CouchbaseLiteSwift.xcframework](https://www.couchbase.com/downloads/?family=couchbase-lite) and copy it to the project's `Frameworks` directory.
+2. [Download](https://www.couchbase.com/downloads/?family=couchbase-lite) the latest `CouchbaseLiteSwift.xcframework` and `CouchbaseLiteVectorSearch.xcframework`, and copy them to the project's `Frameworks` directory.
 3. Open the project in Xcode.
 4. Run the app on two or more simulators, phones, or tablets.
    1. Tap on the `Color` view, then tap the screen. The color will change and sync with other devices.
    2. Tap on the `Photo` view, then tap the screen. The photo will change and sync with other devices.
    3. Tap on the `Count` view, then tap the buttons. The count will change and sync with other devices.
-   3. Tap on the `Search` view, then search using name, color, category, and more.
+   3. Tap on the `Search` view, then search using name, color, category, image, and more.
 
 <img alt="Watch the Demo Video" src="images/demo-screenshot.png" />
 
