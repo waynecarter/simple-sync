@@ -1,6 +1,6 @@
 # Support
 
-If you're experiencing issues with the Count Sync app, or if you have any questions or suggestions, we're here to help!
+If you're experiencing issues with the app, or if you have any questions or suggestions, we're here to help!
 
 We use GitHub issues as our main support channel. Here's how you can use it:
 
