@@ -39,13 +39,12 @@ class Settings: ObservableObject {
             // Construct the URL from it's component parts, only allowing web-socket schemes.
             if let scheme = endpointUrl.scheme?.lowercased(),
                scheme == "wss" || scheme == "ws",
-               let host = endpointUrl.host,
-               let port = endpointUrl.port
+               let host = endpointUrl.host
             {
                 var components = URLComponents()
                 components.scheme = scheme
                 components.host = host
-                components.port = port
+                components.port = endpointUrl.port
 
                 // If we are able to construct a valid URL, create a new endpoint.
                 if let url = components.url {
